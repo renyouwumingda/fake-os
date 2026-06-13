@@ -35,6 +35,22 @@ function updateTaskbar() {
     btn.className = 'taskbar-app' + (win.el.classList.contains('focused') && !win.minimized ? ' active' : '');
     btn.textContent = win.title;
     btn.onclick = function() { toggleWindow(id); };
+    btn.oncontextmenu = function(e) {
+      e.preventDefault();
+      e.stopPropagation();
+      document.querySelectorAll('.context-menu').forEach(function(m) { m.remove(); });
+      var win = FakeOS.windows[id];
+      if (!win) return;
+      var menu = document.createElement('div');
+      menu.className = 'context-menu';
+      menu.style.left = e.clientX + 'px';
+      menu.style.top = e.clientY + 'px';
+      var closeItem = '<div class="context-menu-item" onclick="closeWindow(\'' + id + '\')">关闭</div>';
+      var minItem = '<div class="context-menu-item" onclick="toggleWindow(\'' + id + '\')">' + (win.minimized ? '还原' : '最小化') + '</div>';
+      var maxItem = '<div class="context-menu-item" onclick="maximizeWindow(\'' + id + '\')">' + (win.maximized ? '还原大小' : '最大化') + '</div>';
+      menu.innerHTML = minItem + maxItem + '<div class="context-menu-divider"></div>' + closeItem;
+      document.body.appendChild(menu);
+    };
     container.appendChild(btn);
   });
 }
