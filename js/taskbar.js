@@ -45,7 +45,6 @@ function updateTaskbar() {
       menu.className = 'context-menu';
       menu.style.left = e.clientX + 'px';
       menu.style.top = (e.clientY - 160) + 'px';
-      menu.style.top = e.clientY + 'px';
       var closeItem = '<div class="context-menu-item" onclick="closeWindow(\'' + id + '\')">关闭</div>';
       var minItem = '<div class="context-menu-item" onclick="toggleWindow(\'' + id + '\')">' + (win.minimized ? '还原' : '最小化') + '</div>';
       var maxItem = '<div class="context-menu-item" onclick="maximizeWindow(\'' + id + '\')">' + (win.maximized ? '还原大小' : '最大化') + '</div>';

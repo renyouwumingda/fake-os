@@ -13,9 +13,12 @@ var WEATHER_STATES = ["晴","多云","局部地区有异常","检测到未知实
 var CITIES = ["北京","上海","你家楼下","█████","[数据已损坏]"];
 
 function openWeather() {
+  if (FakeOS.windows["weather"]) { focusWindow("weather"); return; }
+
   weatherState = { temp: 25, step: 0, eyeCount: 0, tempClicks: 0, timer: null };
 
   var city = CITIES[Math.floor(Math.random() * CITIES.length)];
+
   var forecastHtml = "";
   FORECASTS.forEach(function(f) {
     forecastHtml += '<div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid rgba(255,255,255,0.04);font-size:12px;">'
@@ -36,9 +39,7 @@ function openWeather() {
     + forecastHtml
     + '</div></div>';
 
-  if (FakeOS.windows["weather"]) { focusWindow("weather"); return; }
-
-  var win = createWindow("weather", "🌤️ 天气", 350, 320, content);
+  createWindow("weather", "🌤️ 天气", 350, 320, content);
 
   var tempEl = document.getElementById("weather-temp");
   tempEl.addEventListener("click", function() {
@@ -74,9 +75,11 @@ function openWeather() {
     }
   }, 10000);
 
-  var origClose = win.el.querySelector(".window-ctrl-btn.close");
-  if (origClose) {
-    var id = "weather";
-    origClose.addEventListener("click", function() { clearInterval(weatherState.timer); });
-  }
+  // Clean up timer if window is closed by any method
+  var checkAlive = setInterval(function() {
+    if (!FakeOS.windows["weather"]) {
+      clearInterval(weatherState.timer);
+      clearInterval(checkAlive);
+    }
+  }, 1000);
 }
