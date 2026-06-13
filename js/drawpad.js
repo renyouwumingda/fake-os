@@ -27,6 +27,8 @@ function openDrawpad() {
     + '<div id="drawpad-msg" style="padding:4px 10px;font-size:11px;color:rgba(255,255,255,0.3);min-height:20px;"></div>'
     + '</div>';
 
+  if (FakeOS.windows["drawpad"]) { focusWindow("drawpad"); return; }
+
   createWindow("drawpad", "🎨 画板", 500, 400, content);
 
   var canvas = document.getElementById("drawpad-canvas");

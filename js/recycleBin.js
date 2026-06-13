@@ -39,6 +39,8 @@ function openRecycleBin() {
     + '<div id="rb-list" style="flex:1;overflow-y:auto;padding:4px 0;">' + listHtml + '</div>'
     + '</div>';
 
+  if (FakeOS.windows["recycleBin"]) { focusWindow("recycleBin"); return; }
+
   var win = createWindow("recycleBin", "🗑️ 回收站", 400, 350, content);
 
   var fileClickCount = 0;

@@ -16,8 +16,6 @@ function openWeather() {
   weatherState = { temp: 25, step: 0, eyeCount: 0, tempClicks: 0, timer: null };
 
   var city = CITIES[Math.floor(Math.random() * CITIES.length)];
-  var mainIcon = "☀️";
-
   var forecastHtml = "";
   FORECASTS.forEach(function(f) {
     forecastHtml += '<div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid rgba(255,255,255,0.04);font-size:12px;">'
@@ -37,6 +35,8 @@ function openWeather() {
     + '<div style="font-size:11px;color:rgba(255,255,255,0.3);margin-bottom:8px;">5日预报</div>'
     + forecastHtml
     + '</div></div>';
+
+  if (FakeOS.windows["weather"]) { focusWindow("weather"); return; }
 
   var win = createWindow("weather", "🌤️ 天气", 350, 320, content);
 
