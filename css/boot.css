@@ -1,0 +1,135 @@
+/* ===== BIOS Boot Screen ===== */
+#boot-screen {
+  position: fixed;
+  inset: 0;
+  background: #000;
+  z-index: 9999;
+  display: flex;
+  align-items: flex-start;
+  padding: 40px;
+  font-family: 'Courier New', monospace;
+  font-size: 16px;
+  color: #0f0;
+  overflow: hidden;
+}
+
+#boot-text {
+  white-space: pre;
+  line-height: 1.6;
+}
+
+#boot-text .warning {
+  color: #ff0;
+}
+
+#boot-text .error {
+  color: #f00;
+}
+
+/* ===== Login Screen ===== */
+#login-screen {
+  position: fixed;
+  inset: 0;
+  background: linear-gradient(135deg, #0a0a2e 0%, #1a0a3e 50%, #0a1a3e 100%);
+  z-index: 9998;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.login-container {
+  text-align: center;
+  color: #fff;
+}
+
+.login-avatar {
+  font-size: 80px;
+  margin-bottom: 16px;
+  filter: drop-shadow(0 0 20px rgba(100, 100, 255, 0.5));
+}
+
+.login-username {
+  font-size: 24px;
+  font-family: 'Segoe UI', sans-serif;
+  margin-bottom: 24px;
+  letter-spacing: 2px;
+}
+
+#login-password {
+  display: block;
+  width: 280px;
+  margin: 0 auto 16px;
+  padding: 12px 16px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 8px;
+  color: #fff;
+  font-size: 16px;
+  text-align: center;
+  outline: none;
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+#login-password:focus {
+  border-color: #6c63ff;
+  box-shadow: 0 0 12px rgba(108, 99, 255, 0.4);
+}
+
+#login-password.success {
+  border-color: #4caf50;
+  box-shadow: 0 0 12px rgba(76, 175, 80, 0.5);
+}
+
+#login-btn {
+  display: block;
+  width: 280px;
+  margin: 0 auto;
+  padding: 12px;
+  background: linear-gradient(135deg, #6c63ff, #5a52d5);
+  border: none;
+  border-radius: 8px;
+  color: #fff;
+  font-size: 16px;
+  cursor: pointer;
+  letter-spacing: 4px;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+#login-btn:hover {
+  transform: scale(1.02);
+  box-shadow: 0 4px 20px rgba(108, 99, 255, 0.5);
+}
+
+#login-btn:active {
+  transform: scale(0.98);
+}
+
+#login-message {
+  margin-top: 16px;
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.6);
+  min-height: 20px;
+  font-family: 'Courier New', monospace;
+}
+
+/* ===== Transitions ===== */
+.hidden {
+  display: none !important;
+}
+
+.fade-out {
+  animation: fadeOut 0.5s forwards;
+}
+
+@keyframes fadeOut {
+  to { opacity: 0; }
+}
+
+.fade-in {
+  animation: fadeIn 0.5s forwards;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}

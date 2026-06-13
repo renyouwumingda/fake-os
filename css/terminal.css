@@ -1,0 +1,269 @@
+.terminal-body {
+  background: #0a0a0a;
+  font-family: 'Cascadia Code', 'Fira Code', 'Courier New', monospace;
+  font-size: 14px;
+  color: #0f0;
+  padding: 12px;
+  height: 100%;
+  box-sizing: border-box;
+  overflow-y: auto;
+  white-space: pre-wrap;
+  word-break: break-all;
+}
+
+.terminal-body .prompt {
+  color: #0f0;
+}
+
+.terminal-body .output {
+  color: #ccc;
+}
+
+.terminal-body .error-text {
+  color: #f55;
+}
+
+.terminal-body .warning-text {
+  color: #ff0;
+}
+
+.terminal-body .special-text {
+  color: #0ff;
+}
+
+.terminal-input-line {
+  display: flex;
+  align-items: center;
+}
+
+.terminal-input-line .prompt {
+  margin-right: 0;
+  flex-shrink: 0;
+}
+
+.terminal-input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  color: #0f0;
+  font-family: inherit;
+  font-size: inherit;
+  outline: none;
+  caret-color: #0f0;
+}
+
+.terminal-cursor {
+  display: inline-block;
+  width: 8px;
+  height: 16px;
+  background: #0f0;
+  animation: blink 1s step-end infinite;
+  vertical-align: middle;
+}
+
+@keyframes blink {
+  50% { opacity: 0; }
+}
+
+.terminal-flash-red {
+  animation: flashRed 0.3s;
+}
+
+@keyframes flashRed {
+  0%, 100% { background: #0a0a0a; }
+  50% { background: #300; }
+}
+
+/* File Manager */
+.fm-body {
+  display: flex;
+  height: 100%;
+}
+
+.fm-sidebar {
+  width: 160px;
+  background: #12122a;
+  border-right: 1px solid rgba(255,255,255,0.06);
+  padding: 8px 0;
+  overflow-y: auto;
+  flex-shrink: 0;
+}
+
+.fm-folder {
+  padding: 8px 16px;
+  color: rgba(255,255,255,0.6);
+  font-size: 13px;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.fm-folder:hover {
+  background: rgba(255,255,255,0.06);
+}
+
+.fm-folder.active {
+  background: rgba(108, 99, 255, 0.2);
+  color: #fff;
+}
+
+.fm-main {
+  flex: 1;
+  padding: 12px;
+  overflow-y: auto;
+}
+
+.fm-file {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.fm-file:hover {
+  background: rgba(255,255,255,0.06);
+}
+
+.fm-file-icon {
+  font-size: 20px;
+}
+
+.fm-file-name {
+  flex: 1;
+  font-size: 13px;
+}
+
+.fm-file-size {
+  font-size: 11px;
+  color: rgba(255,255,255,0.35);
+}
+
+/* Chat */
+.chat-body {
+  display: flex;
+  height: 100%;
+}
+
+.chat-contacts {
+  width: 180px;
+  background: #12122a;
+  border-right: 1px solid rgba(255,255,255,0.06);
+  overflow-y: auto;
+  flex-shrink: 0;
+}
+
+.chat-contact {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.chat-contact:hover {
+  background: rgba(255,255,255,0.06);
+}
+
+.chat-contact.active {
+  background: rgba(108, 99, 255, 0.2);
+}
+
+.chat-contact-avatar {
+  font-size: 28px;
+}
+
+.chat-contact-info {
+  overflow: hidden;
+}
+
+.chat-contact-name {
+  font-size: 13px;
+  color: #fff;
+}
+
+.chat-contact-status {
+  font-size: 11px;
+  color: rgba(255,255,255,0.4);
+}
+
+.chat-window {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.chat-messages {
+  flex: 1;
+  padding: 16px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.chat-msg {
+  max-width: 75%;
+  padding: 10px 14px;
+  border-radius: 12px;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.chat-msg.npc {
+  background: rgba(255,255,255,0.08);
+  color: #e0e0e0;
+  align-self: flex-start;
+  border-bottom-left-radius: 4px;
+}
+
+.chat-msg.user {
+  background: rgba(108, 99, 255, 0.4);
+  color: #fff;
+  align-self: flex-end;
+  border-bottom-right-radius: 4px;
+}
+
+.chat-msg .msg-sender {
+  font-size: 11px;
+  color: rgba(255,255,255,0.4);
+  margin-bottom: 4px;
+}
+
+.chat-input-area {
+  padding: 12px;
+  border-top: 1px solid rgba(255,255,255,0.06);
+  display: flex;
+  gap: 8px;
+}
+
+.chat-input {
+  flex: 1;
+  padding: 10px 14px;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 8px;
+  color: #fff;
+  font-size: 13px;
+  outline: none;
+}
+
+.chat-input:focus {
+  border-color: rgba(108, 99, 255, 0.4);
+}
+
+.chat-send-btn {
+  padding: 10px 18px;
+  background: #6c63ff;
+  border: none;
+  border-radius: 8px;
+  color: #fff;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.chat-send-btn:hover {
+  background: #5a52d5;
+}

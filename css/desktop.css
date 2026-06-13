@@ -1,0 +1,167 @@
+/* ===== Desktop ===== */
+#desktop {
+  position: fixed;
+  inset: 0;
+  background: linear-gradient(135deg, #0a0a2e 0%, #1a0a3e 40%, #0a1a4e 70%, #0a2a3e 100%);
+  background-size: cover;
+  z-index: 100;
+  overflow: hidden;
+}
+
+#desktop::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: 
+    linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+  background-size: 40px 40px;
+  pointer-events: none;
+}
+
+/* Night mode */
+#desktop.night {
+  background: linear-gradient(135deg, #1a0000 0%, #2a0505 50%, #1a0a0a 100%);
+}
+
+/* ===== Desktop Icons ===== */
+#desktop-icons {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  z-index: 101;
+}
+
+.desktop-icon {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 80px;
+  padding: 10px 4px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.2s;
+  user-select: none;
+}
+
+.desktop-icon:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.desktop-icon:active {
+  background: rgba(255, 255, 255, 0.15);
+}
+
+.desktop-icon.selected {
+  background: rgba(108, 99, 255, 0.3);
+  outline: 1px solid rgba(108, 99, 255, 0.5);
+}
+
+.icon-emoji {
+  font-size: 36px;
+  margin-bottom: 4px;
+  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
+}
+
+.icon-label {
+  font-size: 11px;
+  color: #fff;
+  text-shadow: 0 1px 3px rgba(0,0,0,0.8);
+  text-align: center;
+  word-break: keep-all;
+}
+
+/* ===== Windows Container ===== */
+#windows-container {
+  position: absolute;
+  inset: 0;
+  bottom: 48px;
+  z-index: 200;
+  pointer-events: none;
+}
+
+/* ===== Context Menu ===== */
+.context-menu {
+  position: fixed;
+  background: #1e1e2e;
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 8px;
+  padding: 4px 0;
+  min-width: 160px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.6);
+  z-index: 9000;
+  font-family: 'Segoe UI', sans-serif;
+  font-size: 13px;
+}
+
+.context-menu-item {
+  padding: 8px 16px;
+  color: #e0e0e0;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.context-menu-item:hover {
+  background: rgba(108, 99, 255, 0.3);
+  color: #fff;
+}
+
+.context-menu-divider {
+  height: 1px;
+  background: rgba(255,255,255,0.1);
+  margin: 4px 0;
+}
+
+/* ===== Overlay ===== */
+#overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.7);
+  z-index: 5000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.overlay-box {
+  background: #1e1e2e;
+  border: 1px solid rgba(255,255,255,0.15);
+  border-radius: 12px;
+  padding: 24px 32px;
+  color: #e0e0e0;
+  font-family: 'Segoe UI', sans-serif;
+  text-align: center;
+  max-width: 400px;
+  box-shadow: 0 12px 40px rgba(0,0,0,0.6);
+}
+
+.overlay-box h3 {
+  margin: 0 0 12px;
+  font-size: 18px;
+  color: #fff;
+}
+
+.overlay-box p {
+  margin: 0 0 20px;
+  font-size: 14px;
+  line-height: 1.5;
+  color: rgba(255,255,255,0.7);
+}
+
+.overlay-btn {
+  padding: 8px 24px;
+  background: #6c63ff;
+  border: none;
+  border-radius: 6px;
+  color: #fff;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.overlay-btn:hover {
+  background: #5a52d5;
+}

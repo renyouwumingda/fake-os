@@ -1,0 +1,211 @@
+/* ===== Window System ===== */
+.fake-window {
+  position: absolute;
+  min-width: 320px;
+  min-height: 200px;
+  background: #1a1a2e;
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 10px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.5);
+  pointer-events: auto;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  animation: windowOpen 0.25s ease-out;
+  transition: box-shadow 0.2s;
+}
+
+@keyframes windowOpen {
+  from {
+    transform: scale(0.85);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes windowClose {
+  from {
+    transform: scale(1);
+    opacity: 1;
+  }
+  to {
+    transform: scale(0.85);
+    opacity: 0;
+  }
+}
+
+.fake-window.focused {
+  box-shadow: 0 12px 48px rgba(0,0,0,0.6), 0 0 0 1px rgba(108,99,255,0.3);
+  z-index: 1000;
+}
+
+.fake-window.minimized {
+  display: none;
+}
+
+.fake-window.maximized {
+  top: 0 !important;
+  left: 0 !important;
+  width: 100% !important;
+  height: calc(100% - 48px) !important;
+  border-radius: 0;
+  animation: none;
+}
+
+/* Title Bar */
+.window-titlebar {
+  display: flex;
+  align-items: center;
+  height: 36px;
+  background: #16162a;
+  padding: 0 12px;
+  cursor: grab;
+  user-select: none;
+  flex-shrink: 0;
+}
+
+.window-titlebar:active {
+  cursor: grabbing;
+}
+
+.window-title {
+  flex: 1;
+  font-size: 13px;
+  color: rgba(255,255,255,0.8);
+  font-family: 'Segoe UI', sans-serif;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.window-controls {
+  display: flex;
+  gap: 8px;
+}
+
+.window-ctrl-btn {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  border: none;
+  cursor: pointer;
+  transition: opacity 0.2s;
+  position: relative;
+}
+
+.window-ctrl-btn:hover {
+  opacity: 0.8;
+}
+
+.window-ctrl-btn.minimize {
+  background: #ffbd2e;
+}
+
+.window-ctrl-btn.maximize {
+  background: #28c840;
+}
+
+.window-ctrl-btn.close {
+  background: #ff5f57;
+}
+
+/* Window Content */
+.window-content {
+  flex: 1;
+  overflow: auto;
+  padding: 0;
+  color: #e0e0e0;
+  font-family: 'Segoe UI', sans-serif;
+  font-size: 14px;
+}
+
+/* Resize Handle */
+.window-resize {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 16px;
+  height: 16px;
+  cursor: nwse-resize;
+  opacity: 0;
+}
+
+.fake-window:hover .window-resize {
+  opacity: 1;
+}
+
+/* Popup Alert */
+.fake-alert {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: #1e1e2e;
+  border: 1px solid rgba(255,255,255,0.15);
+  border-radius: 12px;
+  padding: 24px 32px;
+  color: #e0e0e0;
+  font-family: 'Segoe UI', sans-serif;
+  text-align: center;
+  z-index: 8000;
+  box-shadow: 0 12px 40px rgba(0,0,0,0.6);
+  animation: windowOpen 0.2s ease-out;
+  max-width: 420px;
+}
+
+.fake-alert h3 {
+  margin: 0 0 12px;
+  font-size: 16px;
+}
+
+.fake-alert p {
+  margin: 0 0 20px;
+  font-size: 14px;
+  line-height: 1.5;
+  color: rgba(255,255,255,0.7);
+}
+
+.fake-alert-btn {
+  padding: 8px 28px;
+  background: #6c63ff;
+  border: none;
+  border-radius: 6px;
+  color: #fff;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.fake-alert-btn:hover {
+  background: #5a52d5;
+}
+
+/* Input inside alert */
+.fake-alert input {
+  display: block;
+  width: 100%;
+  margin: 0 0 16px;
+  padding: 10px 14px;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.15);
+  border-radius: 6px;
+  color: #fff;
+  font-size: 14px;
+  outline: none;
+  box-sizing: border-box;
+}
+
+.fake-alert input:focus {
+  border-color: #6c63ff;
+}
+
+/* Matrix Effect */
+#matrix-canvas {
+  position: fixed;
+  inset: 0;
+  z-index: 9500;
+  pointer-events: none;
+}
