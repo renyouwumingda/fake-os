@@ -21,6 +21,8 @@ let userSentCount = 0;
 let chatInterval = null;
 
 function openChat() {
+  if (FakeOS.windows["chat"]) { focusWindow("chat"); return; }
+
   var content = '<div class="chat-body"><div class="chat-contacts" id="chat-contacts"></div><div class="chat-window"><div class="chat-messages" id="chat-messages"></div><div class="chat-input-area"><input class="chat-input" id="chat-input" placeholder="输入消息..."><button class="chat-send-btn" id="chat-send-btn">发送</button></div></div></div>';
   createWindow("chat", "聊天", 500, 400, content);
   buildContactList();
@@ -48,10 +50,9 @@ function openChat() {
       addNpcMsg("virus_chat", NPC_MESSAGES.virus_chat[Math.random() * NPC_MESSAGES.virus_chat.length | 0]);
       return;
     }
-    var contacts = ["xiaohong","laowang","system","anonymous"];
-    var c = contacts[Math.random() * contacts.length | 0];
+    var c = selectedContact;
     var msgs = NPC_MESSAGES[c];
-    addNpcMsg(c, msgs[Math.random() * msgs.length | 0]);
+    if (msgs) addNpcMsg(c, msgs[Math.random() * msgs.length | 0]);
   }, 8000 + Math.random() * 12000);
 
   var hour = new Date().getHours();
