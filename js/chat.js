@@ -19,9 +19,13 @@ var sendMsg = null;
 let selectedContact = "xiaohong";
 let userSentCount = 0;
 let chatInterval = null;
+var chatHistories = {};
 
 function openChat() {
   if (FakeOS.windows["chat"]) { focusWindow("chat"); return; }
+
+  chatHistories = {};
+  Object.keys(CHAT_CONTACTS).forEach(function(id) { chatHistories[id] = []; });
 
   var content = '<div class="chat-body"><div class="chat-contacts" id="chat-contacts"></div><div class="chat-window"><div class="chat-messages" id="chat-messages"></div><div class="chat-input-area"><input class="chat-input" id="chat-input" placeholder="输入消息..."><button class="chat-send-btn" id="chat-send-btn">发送</button></div></div></div>';
   createWindow("chat", "聊天", 500, 400, content);
@@ -34,7 +38,7 @@ function openChat() {
   sendMsg = function() {
     var msg = input.value.trim();
     if (!msg) return;
-    addUserMsg(msg);
+    addUserMsg(selectedContact, msg);
     handleReply(msg);
     input.value = "";
     userSentCount++;
@@ -83,12 +87,36 @@ function buildContactList() {
       selectedContact = id;
       document.querySelectorAll(".chat-contact").forEach(function(e) { e.classList.remove("active"); });
       el.classList.add("active");
+      renderMessages(id);
     };
     container.appendChild(el);
   });
 }
 
-function addUserMsg(text) {
+function renderMessages(contactId) {
+  var c = document.getElementById("chat-messages");
+  if (!c) return;
+  c.innerHTML = "";
+  var history = chatHistories[contactId] || [];
+  history.forEach(function(entry) {
+    var msg = document.createElement("div");
+    msg.className = "chat-msg " + entry.type;
+    if (entry.type === "npc") {
+      var contact = CHAT_CONTACTS[contactId];
+      msg.innerHTML = '<div class="msg-sender">' + contact.avatar + " " + contact.name + '</div>' + entry.text;
+    } else if (entry.type === "system") {
+      msg.innerHTML = '<div class="msg-sender">🤖 系统通知</div>' + entry.text;
+    } else {
+      msg.textContent = entry.text;
+    }
+    c.appendChild(msg);
+  });
+  c.scrollTop = c.scrollHeight;
+}
+
+function addUserMsg(contactId, text) {
+  if (!chatHistories[contactId]) chatHistories[contactId] = [];
+  chatHistories[contactId].push({type:"user", text:text});
   var c = document.getElementById("chat-messages");
   if (!c) return;
   var msg = document.createElement("div");
@@ -99,6 +127,9 @@ function addUserMsg(text) {
 }
 
 function addNpcMsg(contactId, text) {
+  if (!chatHistories[contactId]) chatHistories[contactId] = [];
+  chatHistories[contactId].push({type:"npc", text:text});
+  if (contactId !== selectedContact) return;
   var c = document.getElementById("chat-messages");
   if (!c) return;
   var contact = CHAT_CONTACTS[contactId];
@@ -110,6 +141,9 @@ function addNpcMsg(contactId, text) {
 }
 
 function addSystemMsg(text) {
+  if (!chatHistories["system"]) chatHistories["system"] = [];
+  chatHistories["system"].push({type:"system", text:text});
+  if (selectedContact !== "system") return;
   var c = document.getElementById("chat-messages");
   if (!c) return;
   var msg = document.createElement("div");
