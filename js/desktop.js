@@ -100,11 +100,9 @@ function openApp(name) {
     case 'chat': openChat(); break;
     case 'settings': openSettings(); break;
     case 'virus': startVirus(); break;
-    case 'music': openMusic(); break;
     case 'notepad': openNotepad(); break;
     case 'calculator': openCalculator(); break;
-        case 'notepad': openNotepad(); break;
-    case 'calculator': openCalculator(); break;
+    case 'music': openMusic(); break;
     default: showAlert('未找到', '无法打开 "' + name + '"');
   }
 }
