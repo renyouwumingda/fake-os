@@ -1,1 +1,179 @@
-// ===== 桌面图标 =====function initDesktop() {  initDesktopClock();  // 事件委托：双击桌面图标打开应用  document.getElementById("desktop-icons").addEventListener("dblclick", function(e) {    var icon = e.target.closest(".desktop-icon");    if (icon) {      var app = icon.getAttribute("data-app");      if (app) openApp(app);    }  });  // 桌面点击彩蛋：禁止使用外部图片  document.getElementById('desktop').addEventListener('click', function(e) {    if (e.target.closest('.desktop-icon') || e.target.closest('.fake-window') ||        e.target.closest('#taskbar') || e.target.closest('#start-menu')) return;    FakeOS.clickCount++;    if (FakeOS.clickCount >= 10) {      FakeOS.clickCount = 0;      // 用颜色变化代替外部图片，避免闪白      document.getElementById('desktop').style.background = '#2a1a3e';      setTimeout(function() {        document.getElementById('desktop').style.background = '';      }, 3000);    }  });  // 右键菜单  document.getElementById('desktop').addEventListener('contextmenu', function(e) {    if (e.target.closest('.fake-window') || e.target.closest('#taskbar')) return;    e.preventDefault();    showDesktopMenu(e.clientX, e.clientY);  });  document.addEventListener('click', function() {    document.querySelectorAll('.context-menu').forEach(function(m) { m.remove(); });  });  // 图标选中  document.querySelectorAll('.desktop-icon').forEach(function(icon) {    icon.addEventListener('click', function(e) {      document.querySelectorAll('.desktop-icon').forEach(function(i) { i.classList.remove('selected'); });      icon.classList.add('selected');      e.stopPropagation();    });    icon.addEventListener('contextmenu', function(e) {      e.preventDefault();      e.stopPropagation();      showIconMenu(e.clientX, e.clientY, icon.getAttribute('data-app'));    });  });}function showDesktopMenu(x, y) {  var menu = document.createElement('div');  menu.className = 'context-menu';  menu.style.left = x + 'px';  menu.style.top = y + 'px';  menu.innerHTML =    '<div class="context-menu-item" onclick="openApp(\'terminal\')">🖥️ 打开终端</div>' +    '<div class="context-menu-item" onclick="openApp(\'fileManager\')">📁 打开文件管理器</div>' +    '<div class="context-menu-divider"></div>' +    '<div class="context-menu-item" onclick="showAlert(\'分辨率\', \'1920×1080\n实际渲染：你的想象力\')">显示设置</div>' +    '<div class="context-menu-item" onclick="showAlert(\'个性化\', \'壁纸加载失败\n原因：太好看了\')">个性化</div>' +    '<div class="context-menu-divider"></div>' +    '<div class="context-menu-item" onclick="showAlert(\'关于 FakeOS\', \'FakeOS v0.2.0\nBuild: nobody-cares\n\n© 2026 FakeTech Industries\n保留所有假的权力。\')">关于</div>';  document.body.appendChild(menu);}function showIconMenu(x, y, app) {  var menu = document.createElement('div');  menu.className = 'context-menu';  menu.style.left = x + 'px';  menu.style.top = y + 'px';  menu.innerHTML =    '<div class="context-menu-item" onclick="openApp(\'' + app + '\')">打开</div>' +    '<div class="context-menu-item" onclick="showAlert(\'属性\', \'类型：应用程序\n大小：∞KB\n描述：一个谎言\')">属性</div>' +    '<div class="context-menu-divider"></div>' +    '<div class="context-menu-item" onclick="showAlert(\'权限不足\', \'想得美。\')">删除</div>';  document.body.appendChild(menu);}// ===== 打开应用 =====function openApp(name) {  document.querySelectorAll('.context-menu').forEach(function(m) { m.remove(); });  document.getElementById('start-menu').classList.add('hidden');  // 如果窗口已存在，先关掉再重新打开  if (FakeOS.windows[name]) {    var oldWin = FakeOS.windows[name];    if (oldWin.el.parentNode) oldWin.el.parentNode.removeChild(oldWin.el);    delete FakeOS.windows[name];    FakeOS.windowOrder = FakeOS.windowOrder.filter(function(wid) { return wid !== name; });    updateTaskbar();  }  // 同时打开所有窗口彩蛋  var openCount = Object.keys(FakeOS.windows).length;  if (openCount >= 7) {    showAlert('你想把电脑炸了吗？', 'FakeOS 没那么强大……\n\n……还是说？');  }  switch (name) {    case 'terminal': openTerminal(); break;    case 'fileManager': openFileManager(); break;    case 'chat': openChat(); break;    case 'settings': openSettings(); break;    case 'virus': startVirus(); break;    case 'notepad': openNotepad(); break;    case 'calculator': openCalculator(); break;    case 'music': openMusic(); break;    case 'weather': openWeather(); break;    case 'drawpad': openDrawpad(); break;    case 'recycleBin': openRecycleBin(); break;    default: showAlert('未找到', '无法打开 "' + name + '"');  }}function openMusic() {  createWindow('music', '🎵 音乐', 350, 200,    '<div style="padding:24px;text-align:center;">' +      '<div style="font-size:48px;margin-bottom:16px;">🎶</div>' +      '<div style="color:rgba(255,255,255,0.5);font-size:13px;">正在播放：<em>不存在的歌曲.mp3</em></div>' +      '<div style="margin-top:20px;display:flex;justify-content:center;gap:16px;">' +        '<span style="font-size:24px;cursor:pointer;">⏮</span>' +        '<span style="font-size:28px;cursor:pointer;">▶️</span>' +        '<span style="font-size:24px;cursor:pointer;">⏭</span>' +      '</div>' +      '<div style="margin-top:12px;font-size:12px;color:rgba(255,255,255,0.3);">00:00 / ∞:∞</div>' +    '</div>');}// ===== 桌面时钟小部件 =====function initDesktopClock() {  var clockEl = document.createElement("div");  clockEl.id = "desktop-clock";  clockEl.style.cssText =    "position:absolute;top:20px;right:24px;text-align:right;z-index:101;" +    "color:rgba(255,255,255,0.6);font-family:'Segoe UI',sans-serif;" +    "cursor:pointer;user-select:none;transition:opacity 0.3s;" +    "text-shadow:0 2px 8px rgba(0,0,0,0.5);" +    "pointer-events:auto;";  clockEl.innerHTML =    '<div id="clock-time" style="font-size:48px;font-weight:300;letter-spacing:2px;line-height:1.1;"></div>' +    '<div id="clock-date" style="font-size:14px;opacity:0.7;margin-top:4px;"></div>';  document.getElementById("desktop").appendChild(clockEl);  var clickCount = 0;  clockEl.addEventListener("click", function() {    clickCount++;    if (clickCount === 5) {      clickCount = 0;      showAlert("你赶时间吗？", "时间不会因为你一直点它就变快。\n……虽然在这个系统里可能会。");    }  });  updateClockWidget();  setInterval(updateClockWidget, 1000);  // Speed up time every 10 seconds for fun  setInterval(function() {    var timeEl = document.getElementById("clock-time");    if (timeEl && !timeEl._speed) {      timeEl._speed = 0;    }  }, 1000);}function updateClockWidget() {  var now = new Date();  var h = String(now.getHours()).padStart(2, "0");  var m = String(now.getMinutes()).padStart(2, "0");  var s = String(now.getSeconds()).padStart(2, "0");  var timeEl = document.getElementById("clock-time");  var dateEl = document.getElementById("clock-date");  if (!timeEl || !dateEl) return;  timeEl.textContent = h + ":" + m + ":" + s;  var weekdays = ["日", "一", "二", "三", "四", "五", "六"];  var day = weekdays[now.getDay()];  dateEl.textContent = "星期" + day + " " + now.getFullYear() + "年" + (now.getMonth()+1) + "月" + now.getDate() + "日";  // Midnight easter egg  if (h === "00" && m === "00" && s === "00") {    timeEl.textContent = "🎉 新的一天";    dateEl.textContent = "……还是一样";  }}
+// ===== 桌面图标 =====
+function initDesktop() {
+  initDesktopClock();
+  document.getElementById("desktop-icons").addEventListener("dblclick", function(e) {
+    var icon = e.target.closest(".desktop-icon");
+    if (icon) {
+      var app = icon.getAttribute("data-app");
+      if (app) openApp(app);
+    }
+  });
+  document.getElementById('desktop').addEventListener('click', function(e) {
+    if (e.target.closest('.desktop-icon') || e.target.closest('.fake-window') ||
+        e.target.closest('#taskbar') || e.target.closest('#start-menu')) return;
+    FakeOS.clickCount++;
+    if (FakeOS.clickCount >= 10) {
+      FakeOS.clickCount = 0;
+      document.getElementById('desktop').style.background = '#2a1a3e';
+      setTimeout(function() {
+        document.getElementById('desktop').style.background = '';
+      }, 3000);
+    }
+  });
+  document.getElementById('desktop').addEventListener('contextmenu', function(e) {
+    if (e.target.closest('.fake-window') || e.target.closest('#taskbar')) return;
+    e.preventDefault();
+    showDesktopMenu(e.clientX, e.clientY);
+  });
+  document.addEventListener('click', function() {
+    document.querySelectorAll('.context-menu').forEach(function(m) { m.remove(); });
+  });
+  document.querySelectorAll('.desktop-icon').forEach(function(icon) {
+    icon.addEventListener('click', function(e) {
+      document.querySelectorAll('.desktop-icon').forEach(function(i) { i.classList.remove('selected'); });
+      icon.classList.add('selected');
+      e.stopPropagation();
+    });
+    icon.addEventListener('contextmenu', function(e) {
+      e.preventDefault();
+      e.stopPropagation();
+      showIconMenu(e.clientX, e.clientY, icon.getAttribute('data-app'));
+    });
+  });
+}
+
+function showDesktopMenu(x, y) {
+  var menu = document.createElement('div');
+  menu.className = 'context-menu';
+  menu.style.left = x + 'px';
+  menu.style.top = y + 'px';
+  menu.innerHTML =
+    '<div class="context-menu-item" onclick="openApp(\'terminal\')">🖥️ 打开终端</div>' +
+    '<div class="context-menu-item" onclick="openApp(\'fileManager\')">📁 打开文件管理器</div>' +
+    '<div class="context-menu-divider"></div>' +
+    '<div class="context-menu-item" onclick="showAlert(\'分辨率\', \'1920×1080\n实际渲染：你的想象力\')">显示设置</div>' +
+    '<div class="context-menu-item" onclick="showAlert(\'个性化\', \'壁纸加载失败\n原因：太好看了\')">个性化</div>' +
+    '<div class="context-menu-divider"></div>' +
+    '<div class="context-menu-item" onclick="showAlert(\'关于 FakeOS\', \'FakeOS v0.2.0\nBuild: nobody-cares\n\n© 2026 FakeTech Industries\n保留所有假的权力。\')">关于</div>';
+  document.body.appendChild(menu);
+}
+
+function showIconMenu(x, y, app) {
+  var menu = document.createElement('div');
+  menu.className = 'context-menu';
+  menu.style.left = x + 'px';
+  menu.style.top = y + 'px';
+  menu.innerHTML =
+    '<div class="context-menu-item" onclick="openApp(\'' + app + '\')">打开</div>' +
+    '<div class="context-menu-item" onclick="showAlert(\'属性\', \'类型：应用程序\n大小：∞KB\n描述：一个谎言\')">属性</div>' +
+    '<div class="context-menu-divider"></div>' +
+    '<div class="context-menu-item" onclick="showAlert(\'权限不足\', \'想得美。\')">删除</div>';
+  document.body.appendChild(menu);
+}
+
+// ===== 打开应用 =====
+function openApp(name) {
+  document.querySelectorAll('.context-menu').forEach(function(m) { m.remove(); });
+  document.getElementById('start-menu').classList.add('hidden');
+
+  // 如果窗口已存在，先关掉再重新打开
+  if (FakeOS.windows[name]) {
+    var oldWin = FakeOS.windows[name];
+    if (oldWin.el.parentNode) oldWin.el.parentNode.removeChild(oldWin.el);
+    delete FakeOS.windows[name];
+    FakeOS.windowOrder = FakeOS.windowOrder.filter(function(wid) { return wid !== name; });
+    updateTaskbar();
+  }
+
+  // 同时打开所有窗口彩蛋
+  var openCount = Object.keys(FakeOS.windows).length;
+  if (openCount >= 7) {
+    showAlert('你想把电脑炸了吗？', 'FakeOS 没那么强大……\n\n……还是说？');
+  }
+
+  switch (name) {
+    case 'terminal': openTerminal(); break;
+    case 'fileManager': openFileManager(); break;
+    case 'chat': openChat(); break;
+    case 'settings': openSettings(); break;
+    case 'virus': startVirus(); break;
+    case 'notepad': openNotepad(); break;
+    case 'calculator': openCalculator(); break;
+    case 'music': openMusic(); break;
+    case 'weather': openWeather(); break;
+    case 'drawpad': openDrawpad(); break;
+    case 'recycleBin': openRecycleBin(); break;
+    default: showAlert('未找到', '无法打开 "' + name + '"');
+  }
+}
+
+function openMusic() {
+  createWindow('music', '🎵 音乐', 350, 200,
+    '<div style="padding:24px;text-align:center;">' +
+      '<div style="font-size:48px;margin-bottom:16px;">🎶</div>' +
+      '<div style="color:rgba(255,255,255,0.5);font-size:13px;">正在播放：<em>不存在的歌曲.mp3</em></div>' +
+      '<div style="margin-top:20px;display:flex;justify-content:center;gap:16px;">' +
+        '<span style="font-size:24px;cursor:pointer;">⏮</span>' +
+        '<span style="font-size:28px;cursor:pointer;">▶️</span>' +
+        '<span style="font-size:24px;cursor:pointer;">⏭</span>' +
+      '</div>' +
+      '<div style="margin-top:12px;font-size:12px;color:rgba(255,255,255,0.3);">00:00 / ∞:∞</div>' +
+    '</div>');
+}
+
+// ===== 桌面时钟小部件 =====
+function initDesktopClock() {
+  var clockEl = document.createElement("div");
+  clockEl.id = "desktop-clock";
+  clockEl.style.cssText =
+    "position:absolute;top:20px;right:24px;text-align:right;z-index:101;" +
+    "color:rgba(255,255,255,0.6);font-family:'Segoe UI',sans-serif;" +
+    "cursor:pointer;user-select:none;transition:opacity 0.3s;" +
+    "text-shadow:0 2px 8px rgba(0,0,0,0.5);" +
+    "pointer-events:auto;";
+  clockEl.innerHTML =
+    '<div id="clock-time" style="font-size:48px;font-weight:300;letter-spacing:2px;line-height:1.1;"></div>' +
+    '<div id="clock-date" style="font-size:14px;opacity:0.7;margin-top:4px;"></div>';
+  document.getElementById("desktop").appendChild(clockEl);
+
+  var clickCount = 0;
+  clockEl.addEventListener("click", function() {
+    clickCount++;
+    if (clickCount === 5) {
+      clickCount = 0;
+      showAlert("你赶时间吗？", "时间不会因为你一直点它就变快。\n……虽然在这个系统里可能会。");
+    }
+  });
+
+  updateClockWidget();
+  setInterval(updateClockWidget, 1000);
+
+  setInterval(function() {
+    var timeEl = document.getElementById("clock-time");
+    if (timeEl && !timeEl._speed) {
+      timeEl._speed = 0;
+    }
+  }, 1000);
+}
+
+function updateClockWidget() {
+  var now = new Date();
+  var h = String(now.getHours()).padStart(2, "0");
+  var m = String(now.getMinutes()).padStart(2, "0");
+  var s = String(now.getSeconds()).padStart(2, "0");
+
+  var timeEl = document.getElementById("clock-time");
+  var dateEl = document.getElementById("clock-date");
+  if (!timeEl || !dateEl) return;
+
+  timeEl.textContent = h + ":" + m + ":" + s;
+
+  var weekdays = ["日", "一", "二", "三", "四", "五", "六"];
+  var day = weekdays[now.getDay()];
+  dateEl.textContent = "星期" + day + " " + now.getFullYear() + "年" + (now.getMonth()+1) + "月" + now.getDate() + "日";
+
+  if (h === "00" && m === "00" && s === "00") {
+    timeEl.textContent = "🎉 新的一天";
+    dateEl.textContent = "……还是一样";
+  }
+}
