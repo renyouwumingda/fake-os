@@ -44,6 +44,8 @@ function updateTaskbar() {
       var menu = document.createElement('div');
       menu.className = 'context-menu';
       menu.style.left = e.clientX + 'px';
+      menu.style.bottom = (window.innerHeight - e.clientY) + 'px';
+      menu.style.top = 'auto';
       menu.style.top = e.clientY + 'px';
       var closeItem = '<div class="context-menu-item" onclick="closeWindow(\'' + id + '\')">关闭</div>';
       var minItem = '<div class="context-menu-item" onclick="toggleWindow(\'' + id + '\')">' + (win.minimized ? '还原' : '最小化') + '</div>';
