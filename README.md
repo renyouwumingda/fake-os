@@ -4,11 +4,31 @@
 
 一个运行在浏览器里的**伪操作系统**，用纯 HTML + CSS + Vanilla JS 构建，零依赖。打开网页就能体验从 BIOS 自检 → 登录 → 桌面 → 应用 → 病毒灾难的完整叙事流程。
 
+[![版本](https://img.shields.io/badge/version-0.2.0-6c63ff)](https://github.com/renyouwumingda/fake-os/releases/tag/v0.2.0)
+[![许可证](https://img.shields.io/badge/license-MIT-green)](LICENSE)
+
 ---
 
 ## 🚀 快速体验
 
-直接打开 `index.html` 就能运行，不需要任何服务器或构建工具。
+### 方式一：直接打开
+
+```bash
+git clone https://github.com/renyouwumingda/fake-os.git
+cd fake-os
+# 双击打开 index.html
+```
+
+### 方式二：npm 安装
+
+```bash
+npm install fake-os
+# 然后打开 node_modules/fake-os/index.html
+```
+
+### 方式三：在线体验
+
+> 直接打开 `index.html` 即可，不需要任何服务器或构建工具。
 
 1. 等待 BIOS 自检动画完成
 2. 输入任意密码登录（试试输入 "password"）
@@ -51,6 +71,7 @@
 - 闲置 60 秒 → "你还在吗？还是去倒咖啡了？"
 - 终端输入 `matrix` → 黑客帝国字符雨
 - 终端输入 `hack` → 假装黑 NASA
+- 终端输入 `history` → 查看命令历史
 - 终端输入 `why` → 42
 - 版本号点 10 次 → 假开发者控制台
 - 设置里密码输入 `42` → 解锁"危险区域"
@@ -70,8 +91,11 @@
 ```
 fake-os/
 ├── index.html          # 入口
+├── package.json        # npm 包配置
+├── .gitignore          # Git 忽略配置
 ├── DESIGN.md           # 设计文档
 ├── ENRICHMENT_PLAN.md  # 内容丰富计划
+├── LICENSE             # MIT 许可证
 ├── css/
 │   ├── boot.css        # 启动、登录
 │   ├── desktop.css     # 桌面、图标、右键菜单
@@ -102,12 +126,37 @@ fake-os/
 - **特效**：CSS animations + Canvas + requestAnimationFrame
 - **大小**：~22 个文件，~4000 行代码
 
+---
+
+## 📋 更新日志
+
+### v0.2.0 (2026-06-13)
+- 🐛 修复：聊天窗口重复打开时消息发送多次的 bug
+- ✨ 新增：终端 `history` 命令，查看命令历史
+- 📦 发布：npm 包 `fake-os`
+
+### v0.1.3
+- 初始版本
+
+---
+
 ## 📦 发布
 
 ```bash
-git tag v0.1.0
-git push origin v0.1.0
+# Git 发布
+git tag v0.2.0
+git push origin master --tags
+
+# npm 发布
+npm login
+npm publish
 ```
+
+---
+
+## 📄 许可证
+
+[MIT](LICENSE)
 
 ---
 
