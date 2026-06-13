@@ -79,6 +79,15 @@ registerCommand("show", function(args) {
 
 
 
+registerCommand("cat", function(args) {
+  if (!args[0]) return "cat: missing operand";
+  var target = resolvePath(args[0]);
+  var folder = terminalPath ? VIRTUAL_FS[terminalPath] : VIRTUAL_FS[""];
+  if (folder && folder[args[0]] && folder[args[0]].content) return folder[args[0]].content;
+  if (VIRTUAL_FS[target]) return "cat: " + args[0] + ": Is a directory";
+  return "cat: " + args[0] + ": No such file or directory";
+});
+
 registerCommand("history", function() {
   if (terminalHistory.length === 0) return "没有命令历史。";
   return terminalHistory.map(function(cmd, i) { return "  " + (i + 1) + "  " + cmd; }).join("\n");
