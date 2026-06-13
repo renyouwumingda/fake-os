@@ -25,20 +25,37 @@ var BOOT_LINES = [
   { text: '警告: 幽默.dll 加载成功', delay: 1000, cls: 'warning' },
   { text: '', delay: 1100 },
   { text: '正在加载 FakeOS v0.2.0...', delay: 1200 },
-  { text: '████████████████████████ 100%', delay: 1500 },
-  { text: '', delay: 1800 },
-  { text: '就绪。（但真的是就绪吗？）', delay: 2000, cls: 'error' },
+  { text: '', delay: 1300, progress: true },
+  { text: '', delay: 2300 },
+  { text: '就绪。（但真的是就绪吗？）', delay: 2400, cls: 'error' },
 ];
 
 function runBoot() {
   var el = document.getElementById('boot-text');
   BOOT_LINES.forEach(function(line) {
     setTimeout(function() {
-      var span = document.createElement('div');
-      span.textContent = line.text;
-      if (line.cls) span.className = line.cls;
-      el.appendChild(span);
-      el.scrollTop = el.scrollHeight;
+      if (line.progress) {
+        var bar = document.createElement('div');
+        bar.textContent = '[                    ] 0%';
+        el.appendChild(bar);
+        var filled = 0;
+        var total = 20;
+        var barInterval = setInterval(function() {
+          filled++;
+          if (filled > total) { clearInterval(barInterval); return; }
+          var pct = Math.round(filled / total * 100);
+          var blocks = '█'.repeat(filled);
+          var empty = ' '.repeat(total - filled);
+          bar.textContent = '[' + blocks + empty + '] ' + pct + '%';
+          el.scrollTop = el.scrollHeight;
+        }, 50);
+      } else {
+        var span = document.createElement('div');
+        span.textContent = line.text;
+        if (line.cls) span.className = line.cls;
+        el.appendChild(span);
+        el.scrollTop = el.scrollHeight;
+      }
     }, line.delay);
   });
 
