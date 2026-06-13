@@ -147,6 +147,7 @@ registerCommand("open", function(args) {
 });
 
 function openTerminal() {
+  if (FakeOS.windows["terminal"]) { focusWindow("terminal"); return; }
   var content = '<div class="terminal-body"></div>';
   var win = createWindow("terminal", "终端", 600, 400, content);
   var termEl = win.el.querySelector(".terminal-body");

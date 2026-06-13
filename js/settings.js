@@ -2,6 +2,7 @@
 var versionClickCount = 0;
 
 function openSettings() {
+  if (FakeOS.windows["settings"]) { focusWindow("settings"); return; }
   var content = '<div style="display:flex;height:100%;"><div style="width:120px;background:#12122a;border-right:1px solid rgba(255,255,255,0.06);flex-shrink:0;" id="settings-nav"></div><div style="flex:1;padding:20px;overflow:auto;" id="settings-content"></div></div>';
   createWindow("settings", "设置", 550, 400, content);
   buildSettingsNav();

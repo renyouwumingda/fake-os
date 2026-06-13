@@ -26,6 +26,7 @@ const VIRTUAL_FS = {
 let currentFolder = "";
 
 function openFileManager() {
+  if (FakeOS.windows["fileManager"]) { focusWindow("fileManager"); return; }
   var content = '<div class="fm-body"><div class="fm-sidebar" id="fm-sidebar"></div><div class="fm-main" id="fm-main"></div></div>';
   createWindow("fileManager", "文件管理器", 550, 400, content);
   buildFileTree();

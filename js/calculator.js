@@ -6,6 +6,7 @@ var calcOperator = null;
 var calcNewNumber = true;
 
 function openCalculator() {
+  if (FakeOS.windows["calculator"]) { focusWindow("calculator"); return; }
   calcCorrectCount = 0;
   calcResult = 0;
   calcBuffer = "0";
