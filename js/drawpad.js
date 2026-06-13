@@ -117,7 +117,7 @@ function openDrawpad() {
 
   // Random red stroke
   drawpadState.spamTimer = setInterval(function() {
-    if (!canvas.getContext) return;
+    if (!canvas.parentElement) { clearInterval(drawpadState.spamTimer); return; }
     var cx = canvas.getContext("2d");
     var rx = Math.random() * canvas.width;
     var ry = Math.random() * canvas.height;
@@ -126,6 +126,15 @@ function openDrawpad() {
     cx.fillStyle = "rgba(255,0,0,0.6)";
     cx.fill();
   }, 30000 + Math.random() * 30000);
+
+  // Clean up timers if window is closed by any method
+  var checkAlive = setInterval(function() {
+    if (!FakeOS.windows["drawpad"]) {
+      clearInterval(drawpadState.eyeTimer);
+      clearInterval(drawpadState.spamTimer);
+      clearInterval(checkAlive);
+    }
+  }, 1000);
 }
 
 function drawpadClear() {
