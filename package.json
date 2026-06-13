@@ -1,0 +1,24 @@
+{
+  "name": "fake-os",
+  "version": "0.2.0",
+  "description": "一个运行在浏览器里的伪操作系统，纯 HTML + CSS + Vanilla JS，零依赖。从 BIOS 自检到病毒吞噬的完整叙事体验。",
+  "main": "index.html",
+  "type": "module",
+  "scripts": {
+    "start": "npx serve ."
+  },
+  "keywords": ["fake-os", "browser-os", "prank", "easter-egg", "vanilla-js"],
+  "author": "FakeTech Industries",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": ""
+  },
+  "files": [
+    "index.html",
+    "css/",
+    "js/",
+    "README.md",
+    "LICENSE"
+  ]
+}

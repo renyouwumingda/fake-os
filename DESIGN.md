@@ -29,7 +29,7 @@
   Memory Test: 65536KB OK
   Detecting drives... C: 2TB OK
   WARNING: Sanity module not found
-  Loading FakeOS v0.1.3...
+  Loading FakeOS v0.2.0...
   ```
 - 最后一行 "Sanity module not found" 是第一个彩蛋
 - 3秒后自动跳转登录页
@@ -235,7 +235,7 @@
 | 广告个性化 | 关闭后反而出现更多"广告"（弹窗广告模拟） |
 
 ### 7.4 关于系统
-- 系统版本：FakeOS v0.1.3 (Build: nobody-cares)
+- 系统版本：FakeOS v0.2.0 (Build: nobody-cares)
 - 内存：640KB (应该够用了)
 - 存储：已用 2TB / 总共 2TB (但你只存了几个txt)
 - 处理器：Intel i9-99999K @ -3.5GHz

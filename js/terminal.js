@@ -79,6 +79,11 @@ registerCommand("show", function(args) {
 
 
 
+registerCommand("history", function() {
+  if (terminalHistory.length === 0) return "没有命令历史。";
+  return terminalHistory.map(function(cmd, i) { return "  " + (i + 1) + "  " + cmd; }).join("\n");
+});
+
 registerCommand("cd", function(args) {
   if (!args[0]) return "Where do you want to go?";
   var target = resolvePath(args.join(" "));
@@ -143,7 +148,7 @@ function openTerminal() {
   var output = document.createElement("div");
   output.style.flex = "1";
   output.style.overflow = "auto";
-  output.innerHTML = '<div style="color:#0ff">FakeOS 终端 v0.1.3<br>输入 "help" 查看可用命令。<br></div>';
+  output.innerHTML = '<div style="color:#0ff">FakeOS 终端 v0.2.0<br>输入 "help" 查看可用命令。<br></div>';
   termEl.appendChild(output);
 
   var inputLine = document.createElement("div");

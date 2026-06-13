@@ -15,6 +15,7 @@ const NPC_MESSAGES = {
   virus_chat: ["我看见你了。","别想关掉我。","我进来了。","这不是演习。"],
 };
 
+var sendMsg = null;
 let selectedContact = "xiaohong";
 let userSentCount = 0;
 let chatInterval = null;
@@ -28,7 +29,7 @@ function openChat() {
   var input = document.getElementById("chat-input");
   var sendBtn = document.getElementById("chat-send-btn");
 
-  function sendMsg() {
+  sendMsg = function() {
     var msg = input.value.trim();
     if (!msg) return;
     addUserMsg(msg);
@@ -36,10 +37,10 @@ function openChat() {
     input.value = "";
     userSentCount++;
     if (userSentCount === 10) setTimeout(function() { addSystemMsg("消息发送失败。原因：你的社交技能为零。"); }, 500);
-  }
+  };
 
   sendBtn.onclick = sendMsg;
-  input.addEventListener("keydown", function(e) { if (e.key === "Enter") sendMsg(); });
+  input.onkeydown = function(e) { if (e.key === "Enter") sendMsg(); };
 
   if (chatInterval) clearInterval(chatInterval);
   chatInterval = setInterval(function() {
@@ -59,10 +60,13 @@ function openChat() {
 
 function handleReply(msg) {
   var lower = msg.toLowerCase();
-  if (lower.includes("hello") || lower.includes("hi") || lower.includes("你好")) setTimeout(function() { addNpcMsg("xiaohong","你好！有个新需求跟你确认一下！"); }, 1000);
-  else if (lower.includes("ai")) setTimeout(function() { addNpcMsg("anonymous","你怎么知道？"); }, 1500);
-  else if (lower.includes("help") || lower.includes("帮助")) setTimeout(function() { addSystemMsg("本聊天室不提供帮助服务。"); }, 1000);
-  else setTimeout(function() { addNpcMsg("xiaohong","有意思。我再想想，两周后回复你。"); }, 2000);
+  var replyContact = selectedContact;
+  var greetings = ["你好！","嗨！","在吗？","来了来了。"];
+  var defaults = ["有意思。我再想想。","好的，收到。","嗯嗯。","让我想想...","已读。"];
+  if (lower.includes("hello") || lower.includes("hi") || lower.includes("你好")) setTimeout(function() { addNpcMsg(replyContact, greetings[Math.random() * greetings.length | 0]); }, 1000);
+  else if (lower.includes("ai")) setTimeout(function() { addNpcMsg(replyContact, "你怎么知道的？"); }, 1500);
+  else if (lower.includes("help") || lower.includes("帮助")) setTimeout(function() { addNpcMsg(replyContact, "我也想帮你，但我只是个程序。"); }, 1000);
+  else setTimeout(function() { addNpcMsg(replyContact, defaults[Math.random() * defaults.length | 0]); }, 2000);
 }
 
 function buildContactList() {

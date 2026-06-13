@@ -24,7 +24,7 @@ var BOOT_LINES = [
   { text: '警告: 未找到理智模块', delay: 800, cls: 'warning' },
   { text: '警告: 幽默.dll 加载成功', delay: 1000, cls: 'warning' },
   { text: '', delay: 1100 },
-  { text: '正在加载 FakeOS v0.1.3...', delay: 1200 },
+  { text: '正在加载 FakeOS v0.2.0...', delay: 1200 },
   { text: '████████████████████████ 100%', delay: 1500 },
   { text: '', delay: 1800 },
   { text: '就绪。（但真的是就绪吗？）', delay: 2000, cls: 'error' },

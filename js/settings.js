@@ -64,7 +64,7 @@ function getPrivacyHtml() {
 function getAboutHtml() {
   return '<h3 style="margin:0 0 16px;font-size:16px;color:#fff;">关于 FakeOS</h3>'
     + '<div style="font-size:13px;line-height:2;color:rgba(255,255,255,0.7);">'
-    + '<div style="display:flex;justify-content:space-between;"><span>版本：</span><span style="color:#fff;cursor:pointer;" id="version-number" onclick="onVersionClick()">FakeOS v0.1.3</span></div>'
+    + '<div style="display:flex;justify-content:space-between;"><span>版本：</span><span style="color:#fff;cursor:pointer;" id="version-number" onclick="onVersionClick()">FakeOS v0.2.0</span></div>'
     + '<div style="display:flex;justify-content:space-between;"><span>构建：</span><span style="color:#fff;">nobody-cares</span></div>'
     + '<div style="display:flex;justify-content:space-between;"><span>内存：</span><span style="color:#fff;">640KB (应该够用了)</span></div>'
     + '<div style="display:flex;justify-content:space-between;"><span>存储：</span><span style="color:#fff;">2TB / 2TB (但你只存了几个txt)</span></div>'

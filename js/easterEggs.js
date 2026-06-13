@@ -19,7 +19,7 @@ document.addEventListener("keydown", function(e) {
 });
 
 // 控制台彩蛋
-console.log("%cFakeOS v0.1.3", "font-size:24px;color:#6c63ff;font-weight:bold;");
+console.log("%cFakeOS v0.2.0", "font-size:24px;color:#6c63ff;font-weight:bold;");
 console.log("%c你为什么在看控制台？", "color:rgba(255,255,255,0.5);");
 console.log("%c这里没什么有趣的。走吧。", "color:rgba(100,100,100,0.5);");
 console.log("%c……", "color:rgba(100,100,100,0.3);");
