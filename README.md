@@ -4,7 +4,7 @@
 
 一个运行在浏览器里的**伪操作系统**，用纯 HTML + CSS + Vanilla JS 构建，零依赖。打开网页就能体验从 BIOS 自检 → 登录 → 桌面 → 应用 → 病毒灾难的完整叙事流程。
 
-[![版本](https://img.shields.io/badge/version-0.2.0-6c63ff)](https://github.com/renyouwumingda/fake-os/releases/tag/v0.2.0)
+[![版本](https://img.shields.io/badge/version-0.3.0-6c63ff)](https://github.com/renyouwumingda/fake-os/releases/tag/v0.2.0)
 [![许可证](https://img.shields.io/badge/license-MIT-green)](LICENSE)
 
 ---
@@ -121,6 +121,20 @@ fake-os/
 ---
 
 ## 📋 更新日志
+
+### v0.3.0 (2026-06-13)
+- ✨ 新增：天气应用（温度逐渐变为 ∞°C）
+- ✨ 新增：画板应用（画着画着出现眼睛 👁️）
+- ✨ 新增：回收站应用（越翻越诡异的文件）
+- 🐛 修复：所有应用重复打开时内容叠加
+- 🐛 修复：聊天记录切换联系人后独立显示
+- 🐛 修复：任务栏右键菜单向上显示
+- 🐛 修复：定时器泄漏（天气、画板窗口关闭后未清理）
+- 🐛 修复：桌面图标被任务栏遮挡（改为双列网格）
+- 🐛 修复：启动进度条改为动画填充
+- 🐛 修复：「炸电脑」弹窗仅在 7+ 窗口同时打开时触发
+- ✨ 新增：任务栏右键菜单（最小化/最大化/关闭）
+- ✨ 新增：终端 cat、history 命令
 
 ### v0.2.0 (2026-06-13)
 - 🐛 修复：聊天窗口重复打开时消息发送多次的 bug

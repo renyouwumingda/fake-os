@@ -158,7 +158,7 @@ function openTerminal() {
   var output = document.createElement("div");
   output.style.flex = "1";
   output.style.overflow = "auto";
-  output.innerHTML = '<div style="color:#0ff">FakeOS 终端 v0.2.0<br>输入 "help" 查看可用命令。<br></div>';
+  output.innerHTML = '<div style="color:#0ff">FakeOS 终端 v0.3.0<br>输入 "help" 查看可用命令。<br></div>';
   termEl.appendChild(output);
 
   var inputLine = document.createElement("div");
