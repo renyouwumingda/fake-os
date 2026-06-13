@@ -78,13 +78,15 @@ function openApp(name) {
   document.querySelectorAll('.context-menu').forEach(function(m) { m.remove(); });
   document.getElementById('start-menu').classList.add('hidden');
 
-  // 如果窗口已存在，先关掉再重新打开
+  // 如果窗口已存在，直接聚焦
   if (FakeOS.windows[name]) {
-    var oldWin = FakeOS.windows[name];
-    if (oldWin.el.parentNode) oldWin.el.parentNode.removeChild(oldWin.el);
-    delete FakeOS.windows[name];
-    FakeOS.windowOrder = FakeOS.windowOrder.filter(function(wid) { return wid !== name; });
-    updateTaskbar();
+    focusWindow(name);
+    if (FakeOS.windows[name].minimized) {
+      FakeOS.windows[name].minimized = false;
+      FakeOS.windows[name].el.classList.remove('minimized');
+      updateTaskbar();
+    }
+    return;
   }
 
   // 同时打开所有窗口彩蛋
