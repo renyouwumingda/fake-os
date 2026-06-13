@@ -31,28 +31,26 @@
   <!-- 桌面 -->
   <div id="desktop" class="hidden">
     <div id="desktop-icons">
-      <div class="desktop-icon" data-app="terminal" ondblclick="openApp(\"terminal\")">
+      <div class="desktop-icon" data-app="terminal" ondblclick="openApp('terminal')">
         <div class="icon-emoji">🖥️</div>
         <div class="icon-label">终端</div>
       </div>
-      <div class="desktop-icon" data-app="fileManager" ondblclick="openApp(\"fileManager\")">
+      <div class="desktop-icon" data-app="fileManager" ondblclick="openApp('fileManager')">
         <div class="icon-emoji">📁</div>
         <div class="icon-label">文件管理器</div>
       </div>
-      <div class="desktop-icon" data-app="chat" ondblclick="openApp(\"chat\")">
+      <div class="desktop-icon" data-app="chat" ondblclick="openApp('chat')">
         <div class="icon-emoji">💬</div>
         <div class="icon-label">聊天</div>
       </div>
-      <div class="desktop-icon" data-app="settings" ondblclick="openApp(\"settings\")">
+      <div class="desktop-icon" data-app="settings" ondblclick="openApp('settings')">
         <div class="icon-emoji">⚙️</div>
         <div class="icon-label">设置</div>
       </div>
-      <div class="desktop-icon" data-app="virus" id="virus-icon" style="display:none" ondblclick="openApp(\"virus\")">
+      <div class="desktop-icon" data-app="virus" id="virus-icon" style="display:none" ondblclick="openApp('virus')">
         <div class="icon-emoji">💀</div>
         <div class="icon-label">病毒.exe</div>
       </div>
-      
-      
       <div class="desktop-icon" data-app="notepad" ondblclick="openApp('notepad')">
         <div class="icon-emoji">📝</div>
         <div class="icon-label">记事本</div>
@@ -61,10 +59,21 @@
         <div class="icon-emoji">🧮</div>
         <div class="icon-label">计算器</div>
       </div>
-      <div class="desktop-icon" data-app="music"
- ondblclick="openApp(\"music\")">
+      <div class="desktop-icon" data-app="music" ondblclick="openApp('music')">
         <div class="icon-emoji">🎵</div>
         <div class="icon-label">音乐</div>
+      </div>
+      <div class="desktop-icon" data-app="weather" ondblclick="openApp('weather')">
+        <div class="icon-emoji">🌤️</div>
+        <div class="icon-label">天气</div>
+      </div>
+      <div class="desktop-icon" data-app="drawpad" ondblclick="openApp('drawpad')">
+        <div class="icon-emoji">🎨</div>
+        <div class="icon-label">画板</div>
+      </div>
+      <div class="desktop-icon" data-app="recycleBin" ondblclick="openApp('recycleBin')">
+        <div class="icon-emoji">🗑️</div>
+        <div class="icon-label">回收站</div>
       </div>
     </div>
 
@@ -108,9 +117,8 @@
   <script src="js/notepad.js"></script>
   <script src="js/calculator.js"></script>
   <script src="js/easterEggs.js"></script>
+  <script src="js/weather.js"></script>
+  <script src="js/drawpad.js"></script>
+  <script src="js/recycleBin.js"></script>
 </body>
 </html>
-
-
-
-

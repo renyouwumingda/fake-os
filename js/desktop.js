@@ -103,6 +103,9 @@ function openApp(name) {
     case 'notepad': openNotepad(); break;
     case 'calculator': openCalculator(); break;
     case 'music': openMusic(); break;
+    case 'weather': openWeather(); break;
+    case 'drawpad': openDrawpad(); break;
+    case 'recycleBin': openRecycleBin(); break;
     default: showAlert('未找到', '无法打开 "' + name + '"');
   }
 }

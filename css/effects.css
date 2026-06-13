@@ -99,3 +99,21 @@
   50% { filter: brightness(1.3); }
   100% { filter: brightness(1); }
 }
+
+/* 画板眼睛 */
+.drawpad-eye {
+  position: absolute;
+  font-size: 32px;
+  opacity: 0;
+  transition: opacity 2s ease-in;
+  pointer-events: none;
+  z-index: 10;
+}
+.drawpad-eye.visible {
+  opacity: 1;
+}
+
+/* 画板颜色选择器 */
+.drawpad-color:hover {
+  transform: scale(1.2);
+}
