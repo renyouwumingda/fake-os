@@ -50,12 +50,24 @@ function buildFileTree() {
 
 function getFolderIcon(name) { return "📁"; }
 
+var _emptyClickCount = 0;
 function loadFolder(folder) {
   currentFolder = folder;
   buildFileTree();
   var main = document.getElementById("fm-main");
   if (!main) return;
   main.innerHTML = "";
+  // Hidden folder trigger: 5 clicks on empty area
+  main.onclick = function(e) {
+    if (e.target === main) {
+      _emptyClickCount++;
+      if (_emptyClickCount >= 5) {
+        _emptyClickCount = 0;
+        openHiddenFolder();
+      }
+      setTimeout(function() { _emptyClickCount = 0; }, 2000);
+    }
+  };
   if (!VIRTUAL_FS[folder]) return;
 
   var files = VIRTUAL_FS[folder];

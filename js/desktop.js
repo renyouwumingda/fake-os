@@ -56,7 +56,7 @@ function showDesktopMenu(x, y) {
     '<div class="context-menu-item" onclick="showAlert(\'分辨率\', \'1920×1080\n实际渲染：你的想象力\')">显示设置</div>' +
     '<div class="context-menu-item" onclick="showAlert(\'个性化\', \'壁纸加载失败\n原因：太好看了\')">个性化</div>' +
     '<div class="context-menu-divider"></div>' +
-    '<div class="context-menu-item" onclick="showAlert(\'关于 FakeOS\', \'FakeOS v0.3.0\nBuild: nobody-cares\n\n© 2026 FakeTech Industries\n保留所有假的权力。\')">关于</div>';
+    '<div class="context-menu-item" onclick="showAlert(\'关于 FakeOS\', \'FakeOS v0.4.0\nBuild: nobody-cares\n\n© 2026 FakeTech Industries\n保留所有假的权力。\')">关于</div>';
   document.body.appendChild(menu);
 }
 
@@ -107,6 +107,10 @@ function openApp(name) {
     case 'weather': openWeather(); break;
     case 'drawpad': openDrawpad(); break;
     case 'recycleBin': openRecycleBin(); break;
+    case 'camera': openCamera(); break;
+    case 'systemLog': openSystemLog(); break;
+    case 'hiddenFolder': openHiddenFolder(); break;
+    case 'mirror': openMirror(); break;
     default: showAlert('未找到', '无法打开 "' + name + '"');
   }
 }

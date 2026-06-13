@@ -158,8 +158,8 @@
 .chat-contact {
   display: flex;
   align-items: center;
-  gap: 10px;
-  padding: 12px;
+  gap: 8px;
+  padding: 8px 10px;
   cursor: pointer;
   transition: background 0.15s;
 }
@@ -173,7 +173,7 @@
 }
 
 .chat-contact-avatar {
-  font-size: 28px;
+  font-size: 22px;
 }
 
 .chat-contact-info {

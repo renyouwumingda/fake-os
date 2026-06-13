@@ -51,7 +51,7 @@ registerCommand("pwd", function() {
     if (terminalPath === "") return "/home/admin";
     return "/home/admin/" + terminalPath;
   });
-registerCommand("echo", function(args) { return args.join(" ") || ""; });
+// echo command moved to horror section above
 registerCommand("date", function() { return new Date().toString(); });
 registerCommand("whoami", function() { return "admin"; });
 registerCommand("clear", function() { return "__CLEAR__"; });
@@ -88,10 +88,7 @@ registerCommand("cat", function(args) {
   return "cat: " + args[0] + ": No such file or directory";
 });
 
-registerCommand("history", function() {
-  if (terminalHistory.length === 0) return "没有命令历史。";
-  return terminalHistory.map(function(cmd, i) { return "  " + (i + 1) + "  " + cmd; }).join("\n");
-});
+// history command moved to horror section above
 
 registerCommand("cd", function(args) {
   if (!args[0]) return "Where do you want to go?";
@@ -146,6 +143,69 @@ registerCommand("open", function(args) {
   return "open: cannot open \"" + name + "\"";
 });
 
+
+// ===== 恐怖升级命令 =====
+registerCommand("ps", function() {
+  trackCommand();
+  return "PID   NAME              STATUS\n" +
+    "1     system.exe        \u8fd0\u884c\u4e2d\n" +
+    "42    you.exe           \u8fd0\u884c\u4e2d\n" +
+    "137   him.exe           \u7b49\u5f85\u4e2d\n" +
+    "666   unknown.exe       \u9690\u85cf\n" +
+    "999   soul_collector    \u7a7a\u95f2";
+});
+
+registerCommand("kill", function(args) {
+  trackCommand();
+  if (args[0] === "you.exe") return "\u4f60\u4e0d\u80fd\u6740\u6b7b\u81ea\u5df1\u3002\u4f46\u7cfb\u7edf\u53ef\u4ee5\u3002";
+  if (args[0] === "him.exe") return "\u4ed6\u4e0d\u5728\u4e86\u3002\u4f46\u4ed6\u7684\u75d5\u8ff9\u8fd8\u5728\u3002";
+  return "kill: \u672a\u77e5\u8fdb\u7a0b '" + (args[0] || "") + "'";
+});
+
+registerCommand("history", function() {
+  trackCommand();
+  var h = terminalHistory.map(function(cmd, i) { return "  " + (i + 1) + "  " + cmd; }).join("\n");
+  var weird = "\n\n[\u7cfb\u7edf\u63d0\u793a] \u4ee5\u4e0b\u547d\u4ee4\u4e0d\u662f\u4f60\u8f93\u5165\u7684:\n" +
+    "  2026-05-09 03:00:00  help me\n" +
+    "  2026-05-09 03:00:01  why am i here\n" +
+    "  2026-05-09 03:00:02  let me out\n" +
+    "  2026-05-09 03:00:03  please\n";
+  return (h || "\u6ca1\u6709\u547d\u4ee4\u5386\u53f2") + weird;
+});
+
+registerCommand("su", function(args) {
+  trackCommand();
+  if (args[0] === "previous_user") return "\u4ed6\u4e0d\u5728\u4e86\u3002\u4f46\u4ed6\u7684\u75d5\u8ff9\u8fd8\u5728\u3002\n\u4f60\u786e\u5b9a\u8981\u7ee7\u627f\u4ed6\u7684\u4f4d\u7f6e\u5417\uff1f\n[y/N]";
+  return "su: \u7528\u6237 '" + (args[0] || "") + "' \u4e0d\u5b58\u5728";
+});
+
+registerCommand("find", function(args) {
+  trackCommand();
+  var kw = args.join(" ").toLowerCase();
+  if (kw.indexOf("hope") !== -1) return "\u672a\u627e\u5230\u3002\n\u6587\u4ef6 'hope' \u4ece\u6765\u5c31\u4e0d\u5b58\u5728\u3002";
+  return "find: \u6ca1\u6709\u627e\u5230\u5339\u914d\u7684\u7ed3\u679c";
+});
+
+registerCommand("echo", function(args) {
+  trackCommand();
+  var full = args.join(" ");
+  if (full === "$HOME") return Math.random() > 0.5 ? "/home/admin" : "/home/previous_user";
+  if (full === "$PATH") return "/usr/bin:/usr/local/bin:/dev/null:/dev/soul";
+  if (full === "$USER") return Math.random() > 0.5 ? "admin" : "???";
+  return args.join(" ") || "";
+});
+
+registerCommand("cat", function(args) {
+  trackCommand();
+  if (!args[0]) return "cat: missing operand";
+  if (args[0] === "/dev/brain") return "\u6587\u4ef6\u4e3a\u7a7a\u3002";
+  var target = resolvePath(args[0]);
+  var folder = terminalPath ? VIRTUAL_FS[terminalPath] : VIRTUAL_FS[""];
+  if (folder && folder[args[0]] && folder[args[0]].content) return folder[args[0]].content;
+  if (VIRTUAL_FS[target]) return "cat: " + args[0] + ": Is a directory";
+  return "cat: " + args[0] + ": No such file or directory";
+});
+
 function openTerminal() {
   if (FakeOS.windows["terminal"]) { focusWindow("terminal"); return; }
   var content = '<div class="terminal-body"></div>';
@@ -158,7 +218,7 @@ function openTerminal() {
   var output = document.createElement("div");
   output.style.flex = "1";
   output.style.overflow = "auto";
-  output.innerHTML = '<div style="color:#0ff">FakeOS 终端 v0.3.0<br>输入 "help" 查看可用命令。<br></div>';
+  output.innerHTML = '<div style="color:#0ff">FakeOS 终端 v0.4.0<br>输入 "help" 查看可用命令。<br></div>';
   termEl.appendChild(output);
 
   var inputLine = document.createElement("div");

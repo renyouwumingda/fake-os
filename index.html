@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>FakeOS v0.3.0</title>
+  <title>FakeOS v0.4.0</title>
   <link rel="stylesheet" href="css/boot.css">
   <link rel="stylesheet" href="css/desktop.css">
   <link rel="stylesheet" href="css/window.css">
@@ -75,6 +75,18 @@
         <div class="icon-emoji">🗑️</div>
         <div class="icon-label">回收站</div>
       </div>
+      <div class="desktop-icon" data-app="camera" ondblclick="openApp('camera')">
+        <div class="icon-emoji">📡</div>
+        <div class="icon-label">监控摄像头</div>
+      </div>
+      <div class="desktop-icon" data-app="systemLog" ondblclick="openApp('systemLog')">
+        <div class="icon-emoji">📋</div>
+        <div class="icon-label">系统日志</div>
+      </div>
+      <div class="desktop-icon" data-app="mirror" ondblclick="openApp('mirror')">
+        <div class="icon-emoji">🪞</div>
+        <div class="icon-label">镜像</div>
+      </div></div>
     </div>
 
     <div id="windows-container"></div>
@@ -117,6 +129,11 @@
   <script src="js/notepad.js"></script>
   <script src="js/calculator.js"></script>
   <script src="js/easterEggs.js"></script>
+  <script src="js/horror.js"></script>
+  <script src="js/camera.js"></script>
+  <script src="js/systemLog.js"></script>
+  <script src="js/hiddenFolder.js"></script>
+  <script src="js/mirror.js"></script>
   <script src="js/weather.js"></script>
   <script src="js/drawpad.js"></script>
   <script src="js/recycleBin.js"></script>
