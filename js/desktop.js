@@ -23,6 +23,7 @@ function initDesktop() {
   document.getElementById('desktop').addEventListener('contextmenu', function(e) {
     if (e.target.closest('.fake-window') || e.target.closest('#taskbar')) return;
     e.preventDefault();
+    document.querySelectorAll('.context-menu').forEach(function(m) { m.remove(); });
     showDesktopMenu(e.clientX, e.clientY);
   });
   document.addEventListener('click', function() {
@@ -37,6 +38,7 @@ function initDesktop() {
     icon.addEventListener('contextmenu', function(e) {
       e.preventDefault();
       e.stopPropagation();
+      document.querySelectorAll('.context-menu').forEach(function(m) { m.remove(); });
       showIconMenu(e.clientX, e.clientY, icon.getAttribute('data-app'));
     });
   });
