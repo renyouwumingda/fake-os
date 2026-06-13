@@ -19,14 +19,7 @@ cd fake-os
 # 双击打开 index.html
 ```
 
-### 方式二：npm 安装
-
-```bash
-npm install fake-os
-# 然后打开 node_modules/fake-os/index.html
-```
-
-### 方式三：在线体验
+### 方式二：在线体验
 
 > 直接打开 `index.html` 即可，不需要任何服务器或构建工具。
 
@@ -91,7 +84,6 @@ npm install fake-os
 ```
 fake-os/
 ├── index.html          # 入口
-├── package.json        # npm 包配置
 ├── .gitignore          # Git 忽略配置
 ├── DESIGN.md           # 设计文档
 ├── ENRICHMENT_PLAN.md  # 内容丰富计划
@@ -133,24 +125,11 @@ fake-os/
 ### v0.2.0 (2026-06-13)
 - 🐛 修复：聊天窗口重复打开时消息发送多次的 bug
 - ✨ 新增：终端 `history` 命令，查看命令历史
-- 📦 发布：npm 包 `fake-os`
 
 ### v0.1.3
 - 初始版本
 
 ---
-
-## 📦 发布
-
-```bash
-# Git 发布
-git tag v0.2.0
-git push origin master --tags
-
-# npm 发布
-npm login
-npm publish
-```
 
 ---
 
