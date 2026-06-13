@@ -85,13 +85,10 @@ function openApp(name) {
   document.querySelectorAll('.context-menu').forEach(function(m) { m.remove(); });
   document.getElementById('start-menu').classList.add('hidden');
 
-  // 应用打开计数彩蛋
-  if (typeof appOpenCount !== 'undefined') {
-    appOpenCount++;
-    if (appOpenCount >= 5) {
-      appOpenCount = 0;
-      showAlert('你想把电脑炸了吗？', 'FakeOS 没那么强大……\n\n……还是说？');
-    }
+  // 同时打开所有窗口彩蛋
+  var openCount = Object.keys(FakeOS.windows).length;
+  if (openCount >= 7) {
+    showAlert('你想把电脑炸了吗？', 'FakeOS 没那么强大……\n\n……还是说？');
   }
 
   switch (name) {
@@ -109,8 +106,6 @@ function openApp(name) {
     default: showAlert('未找到', '无法打开 "' + name + '"');
   }
 }
-
-var appOpenCount = 0;
 
 function openMusic() {
   createWindow('music', '🎵 音乐', 350, 200,
@@ -184,4 +179,3 @@ function updateClockWidget() {
     dateEl.textContent = "……还是一样";
   }
 }
-
