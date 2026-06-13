@@ -1,7 +1,8 @@
 // ===== 监控摄像头 =====
-var cameraState = { startTime: 0, timer: null, eventsFired: [], checkAlive: null };
+var cameraState = { startTime: 0, timer: null, eventsFired: [], checkAlive: null, blocked: false };
 
 function openCamera() {
+  if (cameraState.blocked) { return; }
   if (FakeOS.windows['camera']) { focusWindow('camera'); return; }
   cameraState = { startTime: Date.now(), timer: null, eventsFired: [], checkAlive: null };
   trackAppOpen('camera');
@@ -68,6 +69,39 @@ function openCamera() {
       var s = document.getElementById('cam4-shadow');
       if (s) s.classList.add('visible');
     }},
+    { time: 45, id: 'flicker2', fn: function() {
+      cam2.style.filter = 'brightness(3)';
+      setTimeout(function() { cam2.style.filter = ''; }, 200);
+    }},
+    { time: 75, id: 'timeWarp', fn: function() {
+      var el = document.getElementById('camera-time');
+      if (el) { el.style.color = '#f55'; el.textContent = '13:37:42'; }
+    }},
+    { time: 160, id: 'officeLight', fn: function() {
+      cam1.style.filter = 'brightness(0.2)';
+      setTimeout(function() { cam1.style.filter = ''; }, 300);
+      setTimeout(function() { cam1.style.filter = 'brightness(0.1)'; }, 500);
+      setTimeout(function() { cam1.style.filter = ''; }, 700);
+    }},
+    { time: 220, id: 'breath', fn: function() {
+      try {
+        var ctx = new (window.AudioContext || window.webkitAudioContext)();
+        var buf = ctx.createBuffer(1, 4410, 44100);
+        var data = buf.getChannelData(0);
+        for (var i = 0; i < 4410; i++) data[i] = (Math.random() * 2 - 1) * 0.02;
+        var src = ctx.createBufferSource();
+        src.buffer = buf;
+        src.connect(ctx.destination);
+        src.start();
+        setTimeout(function() { ctx.close(); }, 50);
+      } catch(e) {}
+    }},
+    { time: 250, id: 'whiteFlash', fn: function() {
+      [cam1,cam2,cam3,cam4].forEach(function(c) {
+        c.style.background = '#fff';
+        setTimeout(function() { c.style.background = ''; }, 200);
+      });
+    }},
     { time: 60, id: 'figure', fn: function() {
       cam2.innerHTML += '<div id="cam2-figure" style="position:absolute;bottom:50%;left:50%;width:20px;height:40px;background:rgba(255,255,255,0.3);border-radius:50% 50% 0 0;transform:translateX(-50%);filter:blur(2px);"></div>';
     }},
@@ -103,6 +137,7 @@ function openCamera() {
       cam4.innerHTML += '<div style="position:absolute;top:40%;left:20%;color:rgba(255,0,0,0.7);font-size:11px;font-family:monospace;animation:ghostFade 2s infinite;white-space:nowrap;">\u6211\u77e5\u9053\u4f60\u5728\u770b</div>';
     }},
     { time: 300, id: 'close', fn: function() {
+      cameraState.blocked = true;
       if (FakeOS.windows['camera']) closeWindow('camera');
     }},
   ];

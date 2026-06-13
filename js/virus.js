@@ -1,3 +1,17 @@
+
+function showVirusPrompt() {
+  showAlert(
+    "⚠️ 警告",
+    "此文件包含恶意代码。\\n\\n你确定要运行吗？",
+    function() {
+      showAlert(
+        "确认运行？",
+        "这是最后的机会。\\n\\n运行后无法撤销。",
+        function() { startVirus(); }
+      );
+    }
+  );
+}
 // ===== 病毒 =====
 var virusStage = 0;
 var virusTimers = [];

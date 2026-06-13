@@ -10,6 +10,7 @@ var horrorState = {
   maintainerMet: false,
   mirrorInputs: 0,
   cameraTime: 0,
+  totalPlayTime: 0,
   eventCooldowns: {},
   metaTriggered: [],
   horrorScheduler: null,
@@ -59,6 +60,7 @@ function getHorrorMessage(level) {
 function startHorrorScheduler() {
   if (horrorState.horrorScheduler) return;
   horrorState.horrorScheduler = setInterval(function() {
+    horrorState.totalPlayTime += 10;
     HORROR_EVENTS.forEach(function(event) {
       if (horrorState.level >= event.minLevel &&
           !horrorState.eventCooldowns[event.name] &&
@@ -178,13 +180,59 @@ var HORROR_EVENTS = [
       setTimeout(function() { shadow.remove(); }, 5000);
     }
   },
+  {
+    name: 'sound',
+    minLevel: 2,
+    cooldown: 240000,
+    probability: 0.05,
+    action: function() {
+      try {
+        var ctx = new (window.AudioContext || window.webkitAudioContext)();
+        var osc = ctx.createOscillator();
+        var gain = ctx.createGain();
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+        osc.type = 'sawtooth';
+        osc.frequency.value = 80 + Math.random() * 40;
+        gain.gain.value = 0.05;
+        osc.start();
+        setTimeout(function() { osc.stop(); ctx.close(); }, 50);
+      } catch(e) {}
+    }
+  },
 ];
 
 // ===== 第四面墙打破 =====
+// Idle tracking
+var _lastActivityTime = Date.now();
+var _clickTimestamps = [];
+var _lastClickTarget = '';
+var _sameClickCount = 0;
+
+document.addEventListener('mousemove', function() { _lastActivityTime = Date.now(); });
+document.addEventListener('keydown', function() { _lastActivityTime = Date.now(); });
+document.addEventListener('click', function() {
+  _lastActivityTime = Date.now();
+  var now = Date.now();
+  _clickTimestamps.push(now);
+  _clickTimestamps = _clickTimestamps.filter(function(t) { return now - t < 5000; });
+  // Track same icon clicks
+  var icon = document.querySelector('.desktop-icon.selected');
+  var iconId = icon ? icon.getAttribute('data-app') : '';
+  if (iconId && iconId === _lastClickTarget) {
+    _sameClickCount++;
+  } else {
+    _sameClickCount = 1;
+    _lastClickTarget = iconId;
+  }
+});
+
 var META_TRIGGERS = [
-  { id: 'idle', check: function() { return false; }, message: '\u4f60\u5728\u7b49\u4ec0\u4e48\uff1f' },
+  { id: 'idle', check: function() { return Date.now() - _lastActivityTime > 120000; }, message: '\u4f60\u5728\u7b49\u4ec0\u4e48\uff1f' },
   { id: 'manyWin', check: function() { return Object.keys(FakeOS.windows).length >= 6; }, message: '\u4f60\u5f88\u5fd9\u554a\u3002' },
   { id: 'allClosed', check: function() { return Object.keys(FakeOS.windows).length === 0 && FakeOS.state === 'desktop'; }, message: '\u5c31\u5269\u6211\u4eec\u4e86\u3002' },
+  { id: 'quickClick', check: function() { return _clickTimestamps.length >= 10; }, message: '\u522b\u7d27\u5f20\u3002' },
+  { id: 'sameIcon', check: function() { return _sameClickCount >= 5; }, message: '\u4f60\u5728\u627e\u4ec0\u4e48\uff1f' },
 ];
 
 function checkMetaTriggers() {
@@ -205,4 +253,20 @@ if (typeof closeWindow === 'function') {
     origClose(id);
     setTimeout(checkMetaTriggers, 500);
   };
+}
+// ===== 窗口调整检测 =====
+var _resizeTimeout = null;
+window.addEventListener('resize', function() {
+  if (_resizeTimeout) clearTimeout(_resizeTimeout);
+  _resizeTimeout = setTimeout(function() {
+    if (horrorState.level >= 3 && horrorState.metaTriggered.indexOf('resize') === -1) {
+      horrorState.metaTriggered.push('resize');
+      setTimeout(function() { showAlert('\u2139\ufe0f', '\u4f60\u5728\u8bd5\u56fe\u9003\u8dd1\u5417\uff1f'); }, 2000);
+    }
+  }, 1000);
+});
+
+// ===== 定时检查第四面墙 =====
+function startMetaTriggerCheck() {
+  setInterval(function() { checkMetaTriggers(); }, 30000);
 }

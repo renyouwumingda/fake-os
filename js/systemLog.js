@@ -81,6 +81,12 @@ var LOG_ENTRIES = [
   {level:'INFO', time:'09:00:26', msg:'\u4fdd\u5b58\u5b8c\u6210'},
   {level:'???', time:'09:00:30', msg:'\u518d\u89c1'},
   {level:'???', time:'09:00:31', msg:'\u4e0b\u6b21\u89c1'},
+  {level:'WARN', time:'09:00:35', msg:'\u68c0\u6d4b\u5230\u7528\u6237\u5fc3\u7387\u5f02\u5e38'},
+  {level:'ERROR', time:'09:00:40', msg:'\u7cfb\u7edf\u81ea\u68c0\u5931\u8d25\uff1a\u65e0\u6cd5\u5b9a\u4f4d\u6838\u5fc3'},
+  {level:'???', time:'09:00:45', msg:'\u522b\u56de\u5934'},
+  {level:'ERROR', time:'09:00:50', msg:'\u68c0\u6d4b\u5230\u975e\u6cd5\u8bbf\u95ee\uff1a/dev/null'},
+  {level:'???', time:'09:00:55', msg:'\u4f60\u4e0d\u662f\u4ed6'},
+  {level:'???', time:'09:01:00', msg:'\u4f46\u6211\u4eec\u559c\u6b22\u4f60'},
 ];
 
 var SEARCH_TRIGGERS = {

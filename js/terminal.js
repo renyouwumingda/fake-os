@@ -285,6 +285,9 @@ function revealHiddenFiles() {
   hidden.textContent = "--- .hidden";
   hidden.onclick = function() { loadFolder(".hidden"); };
   sidebar.appendChild(hidden);
+  // Show virus icon on desktop
+  var virusIcon = document.getElementById("virus-icon");
+  if (virusIcon) virusIcon.style.display = "";
 }
 
 function escapeHtml(str) {
