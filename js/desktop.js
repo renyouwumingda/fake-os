@@ -53,10 +53,10 @@ function showDesktopMenu(x, y) {
     '<div class="context-menu-item" onclick="openApp(\'terminal\')">🖥️ 打开终端</div>' +
     '<div class="context-menu-item" onclick="openApp(\'fileManager\')">📁 打开文件管理器</div>' +
     '<div class="context-menu-divider"></div>' +
-    '<div class="context-menu-item" onclick="showAlert(\'分辨率\', \'1920×1080\n实际渲染：你的想象力\')">显示设置</div>' +
-    '<div class="context-menu-item" onclick="showAlert(\'个性化\', \'壁纸加载失败\n原因：太好看了\')">个性化</div>' +
+    '<div class="context-menu-item" onclick="openDisplaySettings()">显示设置</div>' +
+    '<div class="context-menu-item" onclick="openPersonalization()">个性化</div>' +
     '<div class="context-menu-divider"></div>' +
-    '<div class="context-menu-item" onclick="showAlert(\'关于 FakeOS\', \'FakeOS v0.3.0\nBuild: nobody-cares\n\n© 2026 FakeTech Industries\n保留所有假的权力。\')">关于</div>';
+    '<div class="context-menu-item" onclick="openAbout()">关于</div>';
   document.body.appendChild(menu);
 }
 
@@ -109,6 +109,103 @@ function openApp(name) {
     case 'recycleBin': openRecycleBin(); break;
     default: showAlert('未找到', '无法打开 "' + name + '"');
   }
+}
+
+// ===== 显示设置 =====
+function openDisplaySettings() {
+  document.querySelectorAll('.context-menu').forEach(function(m) { m.remove(); });
+  if (FakeOS.windows['displaySettings']) { focusWindow('displaySettings'); return; }
+
+  var content = '<div style="padding:20px;color:#e0e0e0;font-family:Segoe UI,sans-serif;height:100%;overflow:auto;">'
+    + '<h3 style="margin:0 0 16px;font-size:16px;color:#fff;">显示设置</h3>'
+    + '<div style="margin-bottom:16px;">'
+    + '<div style="font-size:13px;color:rgba(255,255,255,0.5);margin-bottom:8px;">分辨率</div>'
+    + '<div style="display:flex;gap:8px;">'
+    + '<button class="notepad-btn" style="padding:8px 16px;background:rgba(108,99,255,0.3);border:1px solid #6c63ff;border-radius:6px;color:#fff;cursor:pointer;">1920×1080 ✓</button>'
+    + '<button class="notepad-btn" style="padding:8px 16px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.15);border-radius:6px;color:rgba(255,255,255,0.5);cursor:pointer;" onclick="showAlert(\'分辨率\', \'此分辨率会导致现实崩塌。\')">2560×1440</button>'
+    + '<button class="notepad-btn" style="padding:8px 16px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.15);border-radius:6px;color:rgba(255,255,255,0.5);cursor:pointer;" onclick="showAlert(\'分辨率\', \'此分辨率超出人类感知范围。\')">3840×2160</button>'
+    + '</div></div>'
+    + '<div style="margin-bottom:16px;">'
+    + '<div style="font-size:13px;color:rgba(255,255,255,0.5);margin-bottom:8px;">亮度</div>'
+    + '<input type="range" min="0" max="100" value="70" style="width:100%;" onchange="showAlert(\'亮度\', \'亮度已调整。但你看到的仍然是假的。\')">'
+    + '</div>'
+    + '<div style="margin-bottom:16px;">'
+    + '<div style="font-size:13px;color:rgba(255,255,255,0.5);margin-bottom:8px;">缩放</div>'
+    + '<div style="display:flex;gap:8px;">'
+    + '<button class="notepad-btn" style="padding:8px 16px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.15);border-radius:6px;color:rgba(255,255,255,0.5);cursor:pointer;" onclick="showAlert(\'缩放\', \'100% — 你看到的就是全部。不，其实不是。\')">100%</button>'
+    + '<button class="notepad-btn" style="padding:8px 16px;background:rgba(108,99,255,0.3);border:1px solid #6c63ff;border-radius:6px;color:#fff;cursor:pointer;">125% ✓</button>'
+    + '<button class="notepad-btn" style="padding:8px 16px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.15);border-radius:6px;color:rgba(255,255,255,0.5);cursor:pointer;" onclick="showAlert(\'缩放\', \'150% — 放大后更恐怖。\')">150%</button>'
+    + '</div></div>'
+    + '<div style="padding:12px;background:rgba(255,0,0,0.1);border-radius:8px;border:1px solid rgba(255,0,0,0.2);">'
+    + '<div style="font-size:12px;color:rgba(255,255,255,0.5);">⚠️ 当前渲染：你的想象力 × 125%</div>'
+    + '</div></div>';
+
+  createWindow('displaySettings', '🖥️ 显示设置', 450, 380, content);
+}
+
+// ===== 个性化 =====
+function openPersonalization() {
+  document.querySelectorAll('.context-menu').forEach(function(m) { m.remove(); });
+  if (FakeOS.windows['personalization']) { focusWindow('personalization'); return; }
+
+  var wallpapers = [
+    {name: '默认', gradient: 'linear-gradient(135deg, #0a0a2e 0%, #1a0a3e 40%, #0a1a4e 70%, #0a2a3e 100%)'},
+    {name: '暗红', gradient: 'linear-gradient(135deg, #1a0000 0%, #2a0505 50%, #1a0a0a 100%)'},
+    {name: '深渊', gradient: 'linear-gradient(135deg, #000 0%, #0a0a0a 50%, #000 100%)'},
+    {name: '毒液', gradient: 'linear-gradient(135deg, #0a2e0a 0%, #0a3e0a 50%, #0a2e0a 100%)'},
+    {name: '虚空', gradient: 'linear-gradient(135deg, #1a0a2e 0%, #0a1a3e 50%, #2e0a1a 100%)'},
+  ];
+
+  var wpHtml = '';
+  wallpapers.forEach(function(wp, i) {
+    wpHtml += '<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid rgba(255,255,255,0.04);cursor:pointer;" onclick="applyWallpaper(' + i + ')">'
+      + '<div style="width:48px;height:32px;border-radius:4px;background:' + wp.gradient + ';border:1px solid rgba(255,255,255,0.1);flex-shrink:0;"></div>'
+      + '<div><div style="font-size:13px;color:#fff;">' + wp.name + '</div>'
+      + '<div style="font-size:11px;color:rgba(255,255,255,0.4);">' + (i === 0 ? '当前使用' : '点击切换') + '</div></div>'
+      + '</div>';
+  });
+
+  var content = '<div style="padding:20px;color:#e0e0e0;font-family:Segoe UI,sans-serif;height:100%;overflow:auto;">'
+    + '<h3 style="margin:0 0 16px;font-size:16px;color:#fff;">个性化</h3>'
+    + '<div style="font-size:13px;color:rgba(255,255,255,0.5);margin-bottom:12px;">壁纸</div>'
+    + wpHtml
+    + '<div style="margin-top:16px;padding:12px;background:rgba(255,0,0,0.1);border-radius:8px;border:1px solid rgba(255,0,0,0.2);">'
+    + '<div style="font-size:12px;color:rgba(255,255,255,0.5);">⚠️ 所有壁纸均由 AI 生成，不代表任何真实世界观。</div>'
+    + '</div></div>';
+
+  createWindow('personalization', '🎨 个性化', 400, 380, content);
+}
+
+function applyWallpaper(idx) {
+  var wallpapers = [
+    'linear-gradient(135deg, #0a0a2e 0%, #1a0a3e 40%, #0a1a4e 70%, #0a2a3e 100%)',
+    'linear-gradient(135deg, #1a0000 0%, #2a0505 50%, #1a0a0a 100%)',
+    'linear-gradient(135deg, #000 0%, #0a0a0a 50%, #000 100%)',
+    'linear-gradient(135deg, #0a2e0a 0%, #0a3e0a 50%, #0a2e0a 100%)',
+    'linear-gradient(135deg, #1a0a2e 0%, #0a1a3e 50%, #2e0a1a 100%)',
+  ];
+  document.getElementById('desktop').style.background = wallpapers[idx] || wallpapers[0];
+}
+
+// ===== 关于 =====
+function openAbout() {
+  document.querySelectorAll('.context-menu').forEach(function(m) { m.remove(); });
+  if (FakeOS.windows['about']) { focusWindow('about'); return; }
+
+  var content = '<div style="padding:24px;text-align:center;color:#e0e0e0;font-family:Segoe UI,sans-serif;height:100%;overflow:auto;display:flex;flex-direction:column;align-items:center;">'
+    + '<div style="font-size:64px;margin-bottom:12px;">🖥️</div>'
+    + '<div style="font-size:20px;font-weight:600;color:#fff;margin-bottom:4px;">FakeOS</div>'
+    + '<div style="font-size:13px;color:rgba(255,255,255,0.5);margin-bottom:20px;">v0.3.0 (Build: nobody-cares)</div>'
+    + '<div style="text-align:left;width:100%;max-width:300px;">'
+    + '<div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid rgba(255,255,255,0.06);font-size:13px;"><span style="color:rgba(255,255,255,0.5);">内存</span><span style="color:#fff;">640KB (应该够用了)</span></div>'
+    + '<div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid rgba(255,255,255,0.06);font-size:13px;"><span style="color:rgba(255,255,255,0.5);">存储</span><span style="color:#fff;">2TB / 2TB</span></div>'
+    + '<div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid rgba(255,255,255,0.06);font-size:13px;"><span style="color:rgba(255,255,255,0.5);">处理器</span><span style="color:#fff;">Intel i9-99999K @ -3.5GHz</span></div>'
+    + '<div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid rgba(255,255,255,0.06);font-size:13px;"><span style="color:rgba(255,255,255,0.5);">系统状态</span><span style="color:#f00;">⚠️ 一切正常</span></div>'
+    + '</div>'
+    + '<div style="margin-top:20px;font-size:11px;color:rgba(255,255,255,0.3);">© 2026 FakeTech Industries<br>保留所有假的权力。</div>'
+    + '</div>';
+
+  createWindow('about', 'ℹ️ 关于 FakeOS', 380, 420, content);
 }
 
 function openMusic() {
