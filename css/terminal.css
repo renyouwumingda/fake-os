@@ -152,6 +152,7 @@
   border-right: 1px solid rgba(255,255,255,0.06);
   overflow-y: auto;
   flex-shrink: 0;
+  max-height: 440px;
 }
 
 .chat-contact {
