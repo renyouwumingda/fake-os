@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>FakeOS v0.3.0</title>
+  <title>FakeOS v0.4.0</title>
   <link rel="stylesheet" href="css/boot.css">
   <link rel="stylesheet" href="css/desktop.css">
   <link rel="stylesheet" href="css/window.css">
@@ -75,6 +75,18 @@
         <div class="icon-emoji">🗑️</div>
         <div class="icon-label">回收站</div>
       </div>
+      <div class="desktop-icon" data-app="snake" ondblclick="openApp('snake')">
+        <div class="icon-emoji">🐍</div>
+        <div class="icon-label">贪吃蛇</div>
+      </div>
+      <div class="desktop-icon" data-app="minesweeper" ondblclick="openApp('minesweeper')">
+        <div class="icon-emoji">💣</div>
+        <div class="icon-label">扫雷</div>
+      </div>
+      <div class="desktop-icon" data-app="game2048" ondblclick="openApp('game2048')">
+        <div class="icon-emoji">🔢</div>
+        <div class="icon-label">2048</div>
+      </div>
     </div>
 
     <div id="windows-container"></div>
@@ -120,5 +132,8 @@
   <script src="js/weather.js"></script>
   <script src="js/drawpad.js"></script>
   <script src="js/recycleBin.js"></script>
+  <script src="js/snake.js"></script>
+  <script src="js/minesweeper.js"></script>
+  <script src="js/game2048.js"></script>
 </body>
 </html>

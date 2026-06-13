@@ -117,3 +117,13 @@
 .drawpad-color:hover {
   transform: scale(1.2);
 }
+/* 2048 方块抖动 */
+.game-shake {
+  animation: gameShake 0.5s ease-in-out infinite;
+}
+@keyframes gameShake {
+  0%, 100% { transform: translate(0); }
+  25% { transform: translate(-1px, 1px); }
+  50% { transform: translate(1px, -1px); }
+  75% { transform: translate(-1px, 0); }
+}

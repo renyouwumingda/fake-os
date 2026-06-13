@@ -107,6 +107,9 @@ function openApp(name) {
     case 'weather': openWeather(); break;
     case 'drawpad': openDrawpad(); break;
     case 'recycleBin': openRecycleBin(); break;
+    case 'snake': openSnake(); break;
+    case 'minesweeper': openMinesweeper(); break;
+    case 'game2048': openGame2048(); break;
     default: showAlert('未找到', '无法打开 "' + name + '"');
   }
 }
@@ -195,7 +198,7 @@ function openAbout() {
   var content = '<div style="padding:24px;text-align:center;color:#e0e0e0;font-family:Segoe UI,sans-serif;height:100%;overflow:auto;display:flex;flex-direction:column;align-items:center;">'
     + '<div style="font-size:64px;margin-bottom:12px;">🖥️</div>'
     + '<div style="font-size:20px;font-weight:600;color:#fff;margin-bottom:4px;">FakeOS</div>'
-    + '<div style="font-size:13px;color:rgba(255,255,255,0.5);margin-bottom:20px;">v0.3.0 (Build: nobody-cares)</div>'
+    + '<div style="font-size:13px;color:rgba(255,255,255,0.5);margin-bottom:20px;">v0.4.0 (Build: nobody-cares)</div>'
     + '<div style="text-align:left;width:100%;max-width:300px;">'
     + '<div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid rgba(255,255,255,0.06);font-size:13px;"><span style="color:rgba(255,255,255,0.5);">内存</span><span style="color:#fff;">640KB (应该够用了)</span></div>'
     + '<div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid rgba(255,255,255,0.06);font-size:13px;"><span style="color:rgba(255,255,255,0.5);">存储</span><span style="color:#fff;">2TB / 2TB</span></div>'
