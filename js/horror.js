@@ -20,16 +20,19 @@ var horrorState = {
 function trackAppOpen(appName) {
   if (horrorState.appsOpened.indexOf(appName) === -1) horrorState.appsOpened.push(appName);
   checkHorrorLevel();
+  if (typeof StoryEngine !== 'undefined') StoryEngine.onAppOpen(appName);
 }
 
 function trackCommand() {
   horrorState.commandsRun++;
   checkHorrorLevel();
+  if (typeof StoryEngine !== 'undefined') StoryEngine.onCommand();
 }
 
 function trackChat() {
   horrorState.chatMessages++;
   checkHorrorLevel();
+  if (typeof StoryEngine !== 'undefined') StoryEngine.onChat();
 }
 
 function checkHorrorLevel() {
@@ -42,6 +45,7 @@ function checkHorrorLevel() {
   else if (newLevel === 4 && (horrorState.mirrorInputs >= 30 || horrorState.cameraTime >= 300)) newLevel = 5;
   if (newLevel > horrorState.level) {
     horrorState.level = newLevel;
+    if (typeof StoryEngine !== 'undefined') StoryEngine.advance();
     showNotification("\u26a0\ufe0f \u7cfb\u7edf\u8b66\u544a", getHorrorMessage(newLevel));
   }
 }
@@ -61,6 +65,7 @@ function startHorrorScheduler() {
   if (horrorState.horrorScheduler) return;
   horrorState.horrorScheduler = setInterval(function() {
     horrorState.totalPlayTime += 10;
+    if (typeof StoryMemory !== 'undefined') StoryMemory.save();
     HORROR_EVENTS.forEach(function(event) {
       if (horrorState.level >= event.minLevel &&
           !horrorState.eventCooldowns[event.name] &&

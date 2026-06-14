@@ -173,6 +173,7 @@ function startVirus() {
 
     setTimeout(function() {
       location.reload();
+    if (typeof Endings !== 'undefined') Endings.trigger();
     }, 28000 + formatLines.length * 500);
   }, 22000);
 }

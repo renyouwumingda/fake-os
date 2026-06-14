@@ -110,6 +110,7 @@ function initLogin() {
         document.getElementById('desktop').classList.remove('hidden');
         document.getElementById('desktop').classList.add('fade-in');
         FakeOS.state = 'desktop';
+        if (typeof StoryMemory !== 'undefined') StoryMemory.restoreState();
         initDesktop();
         if (typeof startHorrorScheduler === "function") startHorrorScheduler();
         if (typeof startMetaTriggerCheck === "function") startMetaTriggerCheck();
