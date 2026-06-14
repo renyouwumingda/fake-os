@@ -95,6 +95,7 @@ function openApp(name) {
     showAlert('你想把电脑炸了吗？', 'FakeOS 没那么强大……\n\n……还是说？');
   }
 
+  if (typeof trackAppOpen === 'function') trackAppOpen(name);
   switch (name) {
     case 'terminal': openTerminal(); break;
     case 'fileManager': openFileManager(); break;
