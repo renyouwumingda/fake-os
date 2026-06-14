@@ -3,8 +3,8 @@ var hiddenState = { filesOpened: 0, mysteryShown: false };
 
 function openHiddenFolder() {
   if (FakeOS.windows['hiddenFolder']) { focusWindow('hiddenFolder'); return; }
-  trackAppOpen('hiddenFolder');
   horrorState.hiddenFound = true;
+  trackAppOpen('hiddenFolder');
 
   var files = HIDDEN_FILES.slice();
   if (hiddenState.filesOpened >= 3 && !hiddenState.mysteryShown) {
@@ -34,6 +34,9 @@ function openHiddenFolder() {
     row.onmouseleave = function() { row.style.background = ''; };
     row.onclick = function() {
       hiddenState.filesOpened++;
+      if (f.name === '逃生计划.txt' && typeof StoryEngine !== 'undefined') {
+        StoryEngine.setFlag('readEscapePlan', true);
+      }
       showAlert(f.name, f.content);
     };
     list.appendChild(row);

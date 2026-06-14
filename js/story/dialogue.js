@@ -1,37 +1,36 @@
-// ===== 对话系统 =====
+// ===== 对话系统（基于 StoryGraph） =====
 var DialogueSystem = {
-  currentRound: 0,
-  rounds: MAINTAINER_ROUNDS, // references narrative/maintainer.js
-  
+  isPlaying: false,
+  rounds: MAINTAINER_ROUNDS,
+
+  // 检查并触发对话（保留兼容性，实际触发由 StoryEvents 管理）
   checkAndTrigger: function() {
-    var elapsed = (Date.now() - horrorState.startTime) / 1000;
-    var self = this;
-    this.rounds.forEach(function(round) {
-      if (round.used) return;
-      var trigger = false;
-      if (round.trigger === 'time' && elapsed >= round.threshold) trigger = true;
-      if (round.trigger === 'apps' && horrorState.appsOpened.length >= round.threshold) trigger = true;
-      if (round.trigger === 'hidden' && horrorState.hiddenFound) trigger = true;
-      if (round.trigger === 'commands' && horrorState.commandsRun >= round.threshold) trigger = true;
-      if (round.trigger === 'meetings' && horrorState.chatMessages >= round.threshold) trigger = true;
-      if (trigger) {
-        round.used = true;
-        horrorState.maintainerMet = true;
-        StoryEngine.setFlag('maintainerRound_' + self.rounds.indexOf(round), true);
-        self.playRound(round);
-      }
-    });
+    if (this.isPlaying) return;
+    if (typeof StoryVariables !== 'undefined') StoryVariables.syncFromHorror();
+    if (typeof StoryEvents !== 'undefined') StoryEvents.check();
   },
-  
-  playRound: function(round) {
-    round.messages.forEach(function(msg, i) {
-      setTimeout(function() {
-        if (typeof addNpcMsg === 'function' && msg.from === 'system') {
-          addNpcMsg('maintainer', msg.text);
-        } else if (typeof addSystemMsg === 'function' && msg.from === 'user' && msg.options) {
-          addSystemMsg('选择回复: ' + msg.options.join(' / '));
-        }
-      }, i * 2000);
+
+  // 显示选项按钮（兼容旧接口）
+  showChoices: function(options, callback) {
+    var chatEl = document.getElementById('chat-messages');
+    if (!chatEl) { callback(0); return; }
+    var container = document.createElement('div');
+    container.className = 'chat-choices';
+    container.style.cssText = 'padding:8px 12px;display:flex;gap:6px;flex-wrap:wrap;';
+    options.forEach(function(opt, i) {
+      var btn = document.createElement('button');
+      btn.textContent = opt;
+      btn.style.cssText = 'padding:6px 12px;background:rgba(76,175,80,0.2);border:1px solid rgba(76,175,80,0.4);border-radius:12px;color:#4caf50;cursor:pointer;font-size:12px;transition:all 0.2s;';
+      btn.onmouseenter = function() { btn.style.background = 'rgba(76,175,80,0.4)'; };
+      btn.onmouseleave = function() { btn.style.background = 'rgba(76,175,80,0.2)'; };
+      btn.onclick = function() {
+        if (typeof addUserMsg === 'function') addUserMsg('maintainer', opt);
+        container.querySelectorAll('button').forEach(function(b) { b.disabled = true; b.style.opacity = '0.5'; b.style.cursor = 'default'; });
+        callback(i);
+      };
+      container.appendChild(btn);
     });
+    chatEl.appendChild(container);
+    chatEl.scrollTop = chatEl.scrollHeight;
   },
 };

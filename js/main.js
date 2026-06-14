@@ -114,6 +114,8 @@ function initLogin() {
         initDesktop();
         if (typeof startHorrorScheduler === "function") startHorrorScheduler();
         if (typeof startMetaTriggerCheck === "function") startMetaTriggerCheck();
+        if (typeof registerStoryTriggers === 'function') registerStoryTriggers();
+        if (typeof StoryEvents !== 'undefined') StoryEvents.start(10000);
         initTaskbar();
         startIdleTimer();
         checkNightMode();

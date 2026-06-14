@@ -18,7 +18,7 @@ const NPC_MESSAGES = {
 };
 
 var sendMsg = null;
-let selectedContact = "xiaohong";
+var selectedContact = "xiaohong";
 let userSentCount = 0;
 let chatInterval = null;
 var chatHistories = {};
@@ -26,8 +26,10 @@ var chatHistories = {};
 function openChat() {
   if (FakeOS.windows["chat"]) { focusWindow("chat"); return; }
 
-  chatHistories = {};
-  Object.keys(CHAT_CONTACTS).forEach(function(id) { chatHistories[id] = []; });
+  if (!chatHistories || Object.keys(chatHistories).length === 0) {
+    chatHistories = {};
+    Object.keys(CHAT_CONTACTS).forEach(function(id) { chatHistories[id] = []; });
+  }
 
   var content = '<div class="chat-body"><div class="chat-contacts" id="chat-contacts"></div><div class="chat-window"><div class="chat-messages" id="chat-messages"></div><div class="chat-input-area"><input class="chat-input" id="chat-input" placeholder="输入消息..."><button class="chat-send-btn" id="chat-send-btn">发送</button></div></div></div>';
   createWindow("chat", "聊天", 500, 400, content);
@@ -54,6 +56,8 @@ function openChat() {
 
   if (chatInterval) clearInterval(chatInterval);
   chatInterval = setInterval(function() {
+    // 剧情对话进行中时跳过自动消息
+    if (typeof DialogueSystem !== 'undefined' && DialogueSystem.isPlaying) return;
     if (FakeOS.virusActive) {
       addNpcMsg("virus_chat", NPC_MESSAGES.virus_chat[Math.random() * NPC_MESSAGES.virus_chat.length | 0]);
       return;

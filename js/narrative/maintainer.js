@@ -8,7 +8,7 @@ var MAINTAINER_ROUNDS = [
     {from:'system',text:'\u6211\u662f\u7cfb\u7edf\u7ef4\u62a4\u8005\u3002\u6216\u8005\u66fe\u7ecf\u662f\u3002'},
     {from:'system',text:'\u522b\u5bb3\u6015\u3002\u6211\u4e0d\u662f\u6765\u4f24\u5bb3\u4f60\u7684\u3002'},
   ]},
-  { trigger: 'apps', threshold: 5, used: false, messages: [
+  { trigger: 'apps', threshold: 3, used: false, messages: [
     {from:'system',text:'\u4f60\u6253\u5f00\u7684\u5e94\u7528\u8d8a\u6765\u8d8a\u591a\u4e86\u3002'},
     {from:'system',text:'\u5b83\u5728\u901a\u8fc7\u8fd9\u4e9b\u5e94\u7528\u4e86\u89e3\u4f60\u3002'},
     {from:'user',options:['\u4e86\u89e3\u6211\u4ec0\u4e48\uff1f','\u4f60\u662f\u8bf4\u7cfb\u7edf\uff1f','\u6211\u8981\u79bb\u5f00\u8fd9\u91cc']},
@@ -23,7 +23,7 @@ var MAINTAINER_ROUNDS = [
     {from:'system',text:'\u6211\u662f\u7cfb\u7edf\u7684\u4e00\u90e8\u5206\u3002\u5c31\u50cf #00017 \u4e00\u6837\u3002'},
     {from:'system',text:'\u6211\u4eec\u90fd\u88ab\u5438\u6536\u4e86\u3002'},
   ]},
-  { trigger: 'commands', threshold: 20, used: false, messages: [
+  { trigger: 'commands', threshold: 10, used: false, messages: [
     {from:'system',text:'\u4f60\u6267\u884c\u4e86\u5f88\u591a\u547d\u4ee4\u3002'},
     {from:'system',text:'\u6bcf\u4e00\u6761\u547d\u4ee4\u90fd\u5728\u6559\u5b83\u66f4\u591a\u3002'},
     {from:'user',options:['\u6211\u4e0d\u60f3\u73a9\u4e86','\u544a\u8bc9\u6211\u771f\u76f8','\u4f60\u662fAI\u5417\uff1f']},

@@ -65,6 +65,24 @@ registerCommand("life", function() { return "42 年的学生贷款。0 项成就
 registerCommand("sudo", function() { return "[sudo] admin 的密码：...\n开玩笑的，我没有 sudo 权限。\n……还是说我有？"; });
 registerCommand("uninstall", function() { return "错误：你就是病毒。"; });
 registerCommand("reboot", function() { return "正在重启...\n开玩笑的。我不听你的。"; });
+registerCommand("shutdown", function(args) {
+  if (args.join(" ") === "-h now") {
+    if (typeof Endings !== "undefined" && typeof StoryEngine !== "undefined") {
+      var helpedMaintainer = StoryEngine.getChoice("helpedMaintainer");
+      var readEscapePlan = StoryEngine.getFlag("readEscapePlan");
+      if (helpedMaintainer && readEscapePlan) {
+        Endings.trigger("maintainer");
+      } else if (StoryEngine.getChoice("obeyedSystem") === false) {
+        Endings.trigger("escape_failed");
+      } else {
+        Endings.trigger("absorbed");
+      }
+      return "__ENDING__";
+    }
+    return "正在关闭系统...\n...\n...\n系统拒绝关闭。";
+  }
+  return "用法: shutdown -h now";
+});
 
 registerCommand("ping", function(args) {
   var host = args[0] || "localhost";
@@ -79,14 +97,6 @@ registerCommand("show", function(args) {
 
 
 
-registerCommand("cat", function(args) {
-  if (!args[0]) return "cat: missing operand";
-  var target = resolvePath(args[0]);
-  var folder = terminalPath ? VIRTUAL_FS[terminalPath] : VIRTUAL_FS[""];
-  if (folder && folder[args[0]] && folder[args[0]].content) return folder[args[0]].content;
-  if (VIRTUAL_FS[target]) return "cat: " + args[0] + ": Is a directory";
-  return "cat: " + args[0] + ": No such file or directory";
-});
 
 // history command moved to horror section above
 
@@ -198,7 +208,7 @@ registerCommand("echo", function(args) {
 registerCommand("cat", function(args) {
   trackCommand();
   if (!args[0]) return "cat: missing operand";
-  if (args[0] === "/dev/brain") return "\u6587\u4ef6\u4e3a\u7a7a\u3002";
+  if (args[0] === "/dev/brain") return "\u6050\u60e7\u3001\u597d\u5947\u3001\u4e00\u70b9\u70b9\u7edd\u671b";
   var target = resolvePath(args[0]);
   var folder = terminalPath ? VIRTUAL_FS[terminalPath] : VIRTUAL_FS[""];
   if (folder && folder[args[0]] && folder[args[0]].content) return folder[args[0]].content;
@@ -218,7 +228,7 @@ function openTerminal() {
   var output = document.createElement("div");
   output.style.flex = "1";
   output.style.overflow = "auto";
-  output.innerHTML = '<div style="color:#0ff">FakeOS 终端 v0.4.0<br>输入 "help" 查看可用命令。<br></div>';
+  output.innerHTML = '<div style="color:#0ff">FakeOS 终端 v0.4.2<br>输入 "help" 查看可用命令。<br></div>';
   termEl.appendChild(output);
 
   var inputLine = document.createElement("div");
@@ -254,6 +264,7 @@ function openTerminal() {
     if (result === "__CLEAR__") { output.innerHTML = ""; }
     else if (result === "__MATRIX__") { startMatrixEffect(); }
     else if (result === "__SHOW_HIDDEN__") { revealHiddenFiles(); output.innerHTML += "<div class='special-text'>已显示隐藏文件。</div>"; }
+    else if (result === "__ENDING__") { return; }
     else if (result === "__VIRUS_PROMPT__") {
       output.innerHTML += "<div class='warning-text'>你确定吗？这是不可逆的。(y/n)</div>";
       input.waitingVirus = true;

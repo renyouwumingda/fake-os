@@ -10,7 +10,7 @@ var Storyline = {
     explore: '阶段1：正常探索（0-5分钟）— 终端、文件管理器、聊天都正常，偶尔有微妙异常',
     discovery: '阶段2：发现异常（5-10分钟）— 系统日志出现WARN，监控出现影子，聊天出现系统维护者',
     truth: '阶段3：深入了解（10-20分钟）— 打开隐藏文件夹，终端命令显示诡异内容，镜像开始自己说话',
-    confrontation: '阶段4：面对真相（20分钟+）— 系统日志显示完整故事，系统维护者给出最后警告',
+    confrontation: '阶段4：面对真相（20分钟+）— 系统维护者给出逃生方法（shutdown -h now），玩家可选择执行',
     ending: '结局：所有安全协议已失效，用户将成为系统的一部分',
   },
   
@@ -29,14 +29,14 @@ var Storyline = {
     { level: 1, condition: '游玩3分钟', unlocks: '壁纸微调、偶尔闪烁' },
     { level: 2, condition: '打开3个不同应用', unlocks: '监控出现影子、日志出现WARN' },
     { level: 3, condition: '打开隐藏文件夹/执行10条命令', unlocks: '日志诡异对话、聊天出现系统维护者' },
-    { level: 4, condition: '与系统维护者完成3轮对话', unlocks: '镜像自己说话、监控影子逼近' },
+    { level: 4, condition: '系统维护者对话触发3轮', unlocks: '镜像自己说话、监控影子逼近' },
     { level: 5, condition: '镜像输入30次/监控使用5分钟', unlocks: '系统主动攻击、第四面墙全面打破' },
   ],
   
   // Three endings
   endings: {
-    absorbed: '结局A：触发病毒 → 被吸收，成为下一个前用户',
-    escape_failed: '结局B：尝试逃离 → 失败，一切重来',
-    maintainer: '结局C：接受命运 → 成为新的系统维护者',
+    absorbed: '结局A：被吸收 — 触发病毒或终端输入 shutdown 但未帮助维护者，成为下一个前用户',
+    escape_failed: '结局B：逃离失败 — 终端输入 shutdown -h now，但未帮助维护者或未读逃生计划',
+    maintainer: '结局C：成为维护者 — 帮助了维护者 ‛读了逃生计划，终端输入 shutdown -h now',
   },
 };

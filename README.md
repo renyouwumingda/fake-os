@@ -4,7 +4,7 @@
 
 一个运行在浏览器里的**伪操作系统**，用纯 HTML + CSS + Vanilla JS 构建，零依赖。
 
-[![版本](https://img.shields.io/badge/version-0.4.1-6c63ff)](https://github.com/renyouwumingda/fake-os/releases/tag/v0.4.1)
+[![版本](https://img.shields.io/badge/version-0.4.2-6c63ff)](https://github.com/renyouwumingda/fake-os/releases/tag/v0.4.2)
 [![许可证](https://img.shields.io/badge/license-MIT-green)](LICENSE)
 
 ---
@@ -111,6 +111,13 @@ fake-os/
 ---
 
 ## 📋 更新日志
+
+### v0.4.2 (2026-06-14)
+- 🐛 修复：终端版本号更新为 v0.4.2
+- 🐛 修复：终端 cat /dev/brain 返回内容修正
+- 🐛 修复：终端 cat 命令重复注册
+- ✨ 优化：完整剧情流程测试通过（Playwright）
+- ✨ 优化：叙事引擎架构完善
 
 ### v0.4.1 (2026-06-13)
 - 🐛 修复：恐怖系统调度器未启动

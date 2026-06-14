@@ -6,7 +6,7 @@ function openNotepad(fileName, content) {
   content = content || "";
 
   var safeContent = content.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
-  createWindow("notepad_" + Date.now(), "📝 " + fileName, 500, 350,
+  createWindow("notepad", "📝 " + fileName, 500, 350,
     '<div style="display:flex;flex-direction:column;height:100%;">' +
       '<div style="padding:8px 12px;border-bottom:1px solid rgba(255,255,255,0.06);display:flex;gap:8px;align-items:center;">' +
         '<button class="notepad-btn" onclick="notepadSave(this)">💾 保存</button>' +

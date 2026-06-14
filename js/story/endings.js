@@ -34,8 +34,8 @@ var Endings = {
   },
   
   // Trigger the ending
-  trigger: function() {
-    var ending = this.determine();
+  trigger: function(forcedEnding) {
+    var ending = forcedEnding || this.determine();
     var text = this.getText(ending);
     StoryEngine.phase = 'ending';
     StoryEngine.setChoice('ending', ending);

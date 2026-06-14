@@ -172,8 +172,8 @@ function startVirus() {
     });
 
     setTimeout(function() {
-      location.reload();
-    if (typeof Endings !== 'undefined') Endings.trigger();
+      if (typeof Endings !== 'undefined') Endings.trigger();
+      else location.reload();
     }, 28000 + formatLines.length * 500);
   }, 22000);
 }

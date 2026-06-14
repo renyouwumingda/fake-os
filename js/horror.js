@@ -41,7 +41,7 @@ function checkHorrorLevel() {
   if (newLevel === 0 && elapsed > 180) newLevel = 1;
   else if (newLevel === 1 && horrorState.appsOpened.length >= 3) newLevel = 2;
   else if (newLevel === 2 && (horrorState.hiddenFound || horrorState.commandsRun >= 10)) newLevel = 3;
-  else if (newLevel === 3 && horrorState.chatMessages >= 3) newLevel = 4;
+  else if (newLevel === 3 && typeof MAINTAINER_ROUNDS !== 'undefined' && MAINTAINER_ROUNDS.filter(function(r) { return r.used; }).length >= 3) newLevel = 4;
   else if (newLevel === 4 && (horrorState.mirrorInputs >= 30 || horrorState.cameraTime >= 300)) newLevel = 5;
   if (newLevel > horrorState.level) {
     horrorState.level = newLevel;
@@ -66,6 +66,8 @@ function startHorrorScheduler() {
   horrorState.horrorScheduler = setInterval(function() {
     horrorState.totalPlayTime += 10;
     if (typeof StoryMemory !== 'undefined') StoryMemory.save();
+    if (typeof StoryVariables !== 'undefined') StoryVariables.syncFromHorror();
+    if (typeof StoryEvents !== 'undefined') StoryEvents.check();
     HORROR_EVENTS.forEach(function(event) {
       if (horrorState.level >= event.minLevel &&
           !horrorState.eventCooldowns[event.name] &&

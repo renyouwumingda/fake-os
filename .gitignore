@@ -1,3 +1,9 @@
 .codegraph/
-DESIGN.md
-ENRICHMENT_PLAN.md
+node_modules/
+package.json
+package-lock.json
+test-*.js
+test_story*.js
+test_screenshots*/
+_gen.ps1
+_t.js
