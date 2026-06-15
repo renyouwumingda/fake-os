@@ -1,17 +1,9 @@
 // ===== 计算器 =====
-var calcCorrectCount = 0;
-var calcResult = 0;
-var calcBuffer = "";
-var calcOperator = null;
-var calcNewNumber = true;
+var calcState = { correctCount: 0, result: 0, buffer: '0', operator: null, newNumber: true };
 
 function openCalculator() {
   if (FakeOS.windows["calculator"]) { focusWindow("calculator"); return; }
-  calcCorrectCount = 0;
-  calcResult = 0;
-  calcBuffer = "0";
-  calcOperator = null;
-  calcNewNumber = true;
+  calcState = { correctCount: 0, result: 0, buffer: '0', operator: null, newNumber: true };
 
   createWindow("calculator", "🧮 计算器", 280, 340,
     '<div style="padding:12px;height:100%;box-sizing:border-box;display:flex;flex-direction:column;gap:8px;">' +
@@ -38,44 +30,44 @@ function calcBtn(text, action, colSpan) {
 }
 
 function calcDigit(n) {
-  if (calcNewNumber) { calcBuffer = String(n); calcNewNumber = false; }
-  else { calcBuffer = (calcBuffer === "0" ? "" : calcBuffer) + n; }
+  if (calcState.newNumber) { calcState.buffer = String(n); calcState.newNumber = false; }
+  else { calcState.buffer = (calcState.buffer === "0" ? "" : calcState.buffer) + n; }
   updateCalcDisplay();
 }
 
 function calcDot() {
-  if (calcNewNumber) { calcBuffer = "0."; calcNewNumber = false; }
-  else if (calcBuffer.indexOf(".") === -1) calcBuffer += ".";
+  if (calcState.newNumber) { calcState.buffer = "0."; calcState.newNumber = false; }
+  else if (calcState.buffer.indexOf(".") === -1) calcState.buffer += ".";
   updateCalcDisplay();
 }
 
 function calcOp(op) {
-  if (calcOperator && !calcNewNumber) calcEquals();
-  calcResult = parseFloat(calcBuffer) || 0;
-  calcOperator = op;
-  calcNewNumber = true;
+  if (calcState.operator && !calcState.newNumber) calcEquals();
+  calcState.result = parseFloat(calcState.buffer) || 0;
+  calcState.operator = op;
+  calcState.newNumber = true;
   updateCalcSub(op);
 }
 
 function calcEquals() {
-  if (!calcOperator) return;
-  var a = calcResult;
-  var b = parseFloat(calcBuffer) || 0;
-  calcCorrectCount++;
+  if (!calcState.operator) return;
+  var a = calcState.result;
+  var b = parseFloat(calcState.buffer) || 0;
+  calcState.correctCount++;
 
   // Easter eggs
-  if (a === 1 && b === 1 && calcCorrectCount === 3) {
-    calcBuffer = "3"; calcOperator = null; calcNewNumber = true;
+  if (a === 1 && b === 1 && calcState.correctCount === 3) {
+    calcState.buffer = "3"; calcState.operator = null; calcState.newNumber = true;
     updateCalcDisplay(); updateCalcSub(""); return;
   }
-  if (a === 6 && calcOperator === "*" && b === 9) {
-    calcBuffer = "42"; calcOperator = null; calcNewNumber = true;
+  if (a === 6 && calcState.operator === "*" && b === 9) {
+    calcState.buffer = "42"; calcState.operator = null; calcState.newNumber = true;
     updateCalcDisplay(); updateCalcSub(""); return;
   }
 
-  var correct = calcCorrectCount <= 10;
+  var correct = calcState.correctCount <= 10;
   var result;
-  switch (calcOperator) {
+  switch (calcState.operator) {
     case "+": result = correct ? a + b : a + b + 1; break;
     case "-": result = correct ? a - b : a - b - 1; break;
     case "*": result = correct ? a * b : a * b + 5; break;
@@ -83,16 +75,16 @@ function calcEquals() {
     default: result = a + b;
   }
 
-  calcBuffer = typeof result === "number" ? String(Math.round(result * 10000) / 10000) : "不能除以零";
-  calcOperator = null;
-  calcNewNumber = true;
+  calcState.buffer = typeof result === "number" ? String(Math.round(result * 10000) / 10000) : "不能除以零";
+  calcState.operator = null;
+  calcState.newNumber = true;
   updateCalcDisplay();
   updateCalcSub("");
 }
 
 function calcClear() {
-  calcBuffer = "0"; calcResult = 0; calcOperator = null; calcNewNumber = true;
-  calcCorrectCount = 0;
+  calcState.buffer = "0"; calcState.result = 0; calcState.operator = null; calcState.newNumber = true;
+  calcState.correctCount = 0;
   updateCalcDisplay();
   updateCalcSub("");
 
@@ -106,20 +98,20 @@ function calcClear() {
 }
 
 function calcNegate() {
-  if (calcBuffer !== "0") {
-    calcBuffer = calcBuffer.indexOf("-") === 0 ? calcBuffer.substring(1) : "-" + calcBuffer;
+  if (calcState.buffer !== "0") {
+    calcState.buffer = calcState.buffer.indexOf("-") === 0 ? calcState.buffer.substring(1) : "-" + calcState.buffer;
     updateCalcDisplay();
   }
 }
 
 function calcPercent() {
-  calcBuffer = String(parseFloat(calcBuffer) / 100);
+  calcState.buffer = String(parseFloat(calcState.buffer) / 100);
   updateCalcDisplay();
 }
 
 function updateCalcDisplay() {
   var d = document.getElementById("calc-display");
-  if (d) d.textContent = calcBuffer || "0";
+  if (d) d.textContent = calcState.buffer || "0";
 }
 
 function updateCalcSub(op) {

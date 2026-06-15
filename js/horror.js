@@ -12,6 +12,11 @@ var horrorState = {
   cameraTime: 0,
   totalPlayTime: 0,
   eventCooldowns: {},
+  lastActivityTime: Date.now(),
+  clickTimestamps: [],
+  lastClickTarget: '',
+  sameClickCount: 0,
+  resizeTimeout: null,
   metaTriggered: [],
   horrorScheduler: null,
   checkAliveTimer: null,
@@ -211,35 +216,35 @@ var HORROR_EVENTS = [
 
 // ===== 第四面墙打破 =====
 // Idle tracking
-var _lastActivityTime = Date.now();
-var _clickTimestamps = [];
-var _lastClickTarget = '';
-var _sameClickCount = 0;
+// _lastActivityTime moved to horrorState.lastActivityTime
+// _clickTimestamps moved to horrorState.clickTimestamps
+// horrorState.lastClickTarget moved to horrorState.lastClickTarget
+// _sameClickCount moved to horrorState.sameClickCount
 
-document.addEventListener('mousemove', function() { _lastActivityTime = Date.now(); });
-document.addEventListener('keydown', function() { _lastActivityTime = Date.now(); });
+document.addEventListener('mousemove', function() { horrorState.lastActivityTime = Date.now(); });
+document.addEventListener('keydown', function() { horrorState.lastActivityTime = Date.now(); });
 document.addEventListener('click', function() {
-  _lastActivityTime = Date.now();
+  horrorState.lastActivityTime = Date.now();
   var now = Date.now();
-  _clickTimestamps.push(now);
-  _clickTimestamps = _clickTimestamps.filter(function(t) { return now - t < 5000; });
+  horrorState.clickTimestamps.push(now);
+  horrorState.clickTimestamps = horrorState.clickTimestamps.filter(function(t) { return now - t < 5000; });
   // Track same icon clicks
   var icon = document.querySelector('.desktop-icon.selected');
   var iconId = icon ? icon.getAttribute('data-app') : '';
-  if (iconId && iconId === _lastClickTarget) {
-    _sameClickCount++;
+  if (iconId && iconId === horrorState.lastClickTarget) {
+    horrorState.sameClickCount++;
   } else {
-    _sameClickCount = 1;
-    _lastClickTarget = iconId;
+    horrorState.sameClickCount = 1;
+    horrorState.lastClickTarget = iconId;
   }
 });
 
 var META_TRIGGERS = [
-  { id: 'idle', check: function() { return Date.now() - _lastActivityTime > 120000; }, message: '\u4f60\u5728\u7b49\u4ec0\u4e48\uff1f' },
+  { id: 'idle', check: function() { return Date.now() - horrorState.lastActivityTime > 120000; }, message: '\u4f60\u5728\u7b49\u4ec0\u4e48\uff1f' },
   { id: 'manyWin', check: function() { return Object.keys(FakeOS.windows).length >= 6; }, message: '\u4f60\u5f88\u5fd9\u554a\u3002' },
   { id: 'allClosed', check: function() { return Object.keys(FakeOS.windows).length === 0 && FakeOS.state === 'desktop'; }, message: '\u5c31\u5269\u6211\u4eec\u4e86\u3002' },
-  { id: 'quickClick', check: function() { return _clickTimestamps.length >= 10; }, message: '\u522b\u7d27\u5f20\u3002' },
-  { id: 'sameIcon', check: function() { return _sameClickCount >= 5; }, message: '\u4f60\u5728\u627e\u4ec0\u4e48\uff1f' },
+  { id: 'quickClick', check: function() { return horrorState.clickTimestamps.length >= 10; }, message: '\u522b\u7d27\u5f20\u3002' },
+  { id: 'sameIcon', check: function() { return horrorState.sameClickCount >= 5; }, message: '\u4f60\u5728\u627e\u4ec0\u4e48\uff1f' },
 ];
 
 function checkMetaTriggers() {
@@ -253,7 +258,7 @@ function checkMetaTriggers() {
 }
 
 // 绑定到窗口关闭事件
-var _origCloseWindow = window.closeWindow;
+// _origCloseWindow removed (not needed)
 if (typeof closeWindow === 'function') {
   var origClose = closeWindow;
   closeWindow = function(id) {
@@ -262,10 +267,10 @@ if (typeof closeWindow === 'function') {
   };
 }
 // ===== 窗口调整检测 =====
-var _resizeTimeout = null;
+// horrorState.resizeTimeout moved to horrorState.resizeTimeout
 window.addEventListener('resize', function() {
-  if (_resizeTimeout) clearTimeout(_resizeTimeout);
-  _resizeTimeout = setTimeout(function() {
+  if (horrorState.resizeTimeout) clearTimeout(horrorState.resizeTimeout);
+  horrorState.resizeTimeout = setTimeout(function() {
     if (horrorState.level >= 3 && horrorState.metaTriggered.indexOf('resize') === -1) {
       horrorState.metaTriggered.push('resize');
       setTimeout(function() { showAlert('\u2139\ufe0f', '\u4f60\u5728\u8bd5\u56fe\u9003\u8dd1\u5417\uff1f'); }, 2000);

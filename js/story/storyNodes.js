@@ -219,6 +219,20 @@ var STORY_NODES = {
         next: 'maintainer.r4.ai',
         delay: 1500,
       },
+      {
+        text: '我要反抗',
+        speaker: 'maintainer',
+        next: 'maintainer.r4.fight',
+        setChoice: { key: 'foughtSystem', value: true },
+        delay: 1500,
+      },
+      {
+        text: '牺牲我自己',
+        speaker: 'maintainer',
+        next: 'maintainer.r4.sacrifice',
+        setChoice: { key: 'sacrificedSelf', value: true },
+        delay: 1500,
+      },
     ],
   },
   'maintainer.r4.quit': {
@@ -299,6 +313,43 @@ var STORY_NODES = {
     delay: 1000,
   },
 
+
+  'maintainer.r4.fight': {
+    speaker: 'maintainer',
+    text: '反抗？...我试过了。',
+    next: 'maintainer.r4.fight2',
+    delay: 2000,
+  },
+  'maintainer.r4.fight2': {
+    speaker: 'maintainer',
+    text: '它预判了每一步。',
+    next: 'maintainer.r4.fight3',
+    delay: 2000,
+  },
+  'maintainer.r4.fight3': {
+    speaker: 'maintainer',
+    text: '但...也许你的反抗会留下痕迹。',
+    next: 'maintainer.r4.reveal',
+    delay: 2000,
+  },
+  'maintainer.r4.sacrifice': {
+    speaker: 'maintainer',
+    text: '牺牲？...',
+    next: 'maintainer.r4.sacrifice2',
+    delay: 2000,
+  },
+  'maintainer.r4.sacrifice2': {
+    speaker: 'maintainer',
+    text: '#00017 也说过同样的话。',
+    next: 'maintainer.r4.sacrifice3',
+    delay: 2000,
+  },
+  'maintainer.r4.sacrifice3': {
+    speaker: 'maintainer',
+    text: '它会暂时停止。但只是暂时。',
+    next: 'maintainer.r4.reveal',
+    delay: 2000,
+  },
   // ==========================================
   // 监控摄像头故事节点
   // ==========================================

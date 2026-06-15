@@ -8,6 +8,8 @@ var Endings = {
     
     // Ending C: Became the new maintainer
     if (helpedMaintainer && readEscapePlan) return 'maintainer';
+    if (StoryEngine.getChoice('foughtSystem')) return 'defiance';
+    if (StoryEngine.getChoice('sacrificedSelf')) return 'sacrifice';
     // Ending B: Escape failed
     if (obeyedSystem === false) return 'escape_failed';
     // Ending A: Absorbed by system (default)

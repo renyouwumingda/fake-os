@@ -1,20 +1,18 @@
 // ===== 通知系统 =====
-var notificationQueue = [];
-var activeNotifications = [];
-var notificationCount = 0;
+var notifState = { queue: [], active: [], count: 0 };
 
 function showNotification(title, text, icon, onClick) {
   icon = icon || "ℹ️";
-  notificationCount++;
+  notifState.count++;
 
   // Easter egg: 10th notification
-  if (notificationCount === 10) {
+  if (notifState.count === 10) {
     title = "第 10 条通知";
     text = "没有一条是重要的。";
     icon = "🎉";
   }
   // Random easter egg
-  if (notificationCount > 10 && Math.random() < 0.03) {
+  if (notifState.count > 10 && Math.random() < 0.03) {
     text = "我能在你背后看到你。";
     icon = "👁️";
   }
@@ -39,11 +37,11 @@ function showNotification(title, text, icon, onClick) {
     '</div>';
 
   document.body.appendChild(notif);
-  activeNotifications.push(notif);
+  notifState.active.push(notif);
 
   // Remove oldest if too many
-  if (activeNotifications.length > 3) {
-    var old = activeNotifications.shift();
+  if (notifState.active.length > 3) {
+    var old = notifState.active.shift();
     if (old.parentNode) old.parentNode.removeChild(old);
   }
 
@@ -55,7 +53,7 @@ function showNotification(title, text, icon, onClick) {
         if (notif.parentNode) notif.parentNode.removeChild(notif);
       }, 300);
     }
-    activeNotifications = activeNotifications.filter(function(n) { return n !== notif; });
+    notifState.active = notifState.active.filter(function(n) { return n !== notif; });
   }, 4000);
 
   // Click handler
