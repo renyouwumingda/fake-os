@@ -62,7 +62,7 @@ cd fake-os
 
 ## 🏗️ 项目结构
 
-`
+```
 fake-os/
 ├── index.html              # 入口
 ├── .gitignore              # Git 忽略配置
@@ -115,8 +115,8 @@ fake-os/
 │       ├── hiddenFiles.js  #   隐藏文件
 │       └── virusStory.js   #   病毒文本
 └── assets/                 # 资源
-`
-## 🛠️ 技术栈
+```
+🛠️ 技术栈
 
 - **纯前端**：HTML + CSS + Vanilla JS，零依赖
 - **特效**：CSS animations + Canvas + requestAnimationFrame
