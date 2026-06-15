@@ -64,44 +64,58 @@ cd fake-os
 
 `
 fake-os/
-├── index.html          # 入口
-├── .gitignore          # Git 忽略配置
-├── DESIGN.md           # 设计文档
-├── ENRICHMENT_PLAN.md  # 内容丰富计划
-├── HORROR_LORE.md      # 恐怖叙事设计文档
-├── LICENSE             # MIT 许可证
+├── index.html              # 入口
+├── .gitignore              # Git 忽略配置
+├── HORROR_LORE.md          # 恐怖叙事设计文档
+├── LICENSE                 # MIT 许可证
 ├── css/
-│   ├── boot.css        # 启动、登录
-│   ├── desktop.css     # 桌面、图标、右键菜单
-│   ├── window.css      # 窗口系统
-│   ├── taskbar.css     # 任务栏、开始菜单
-│   ├── terminal.css    # 终端、文件管理器、聊天
-│   └── effects.css     # 特效动画
-└── js/
-    ├── main.js         # 主控制器、启动、登录
-    ├── window.js       # 窗口管理器
-    ├── taskbar.js      # 任务栏
-    ├── desktop.js      # 桌面图标、应用开关
-    ├── terminal.js     # 终端模拟器
-    ├── fileManager.js  # 文件管理器
-    ├── chat.js         # 聊天软件
-    ├── settings.js     # 系统设置
-    ├── virus.js        # 病毒灾难
-    ├── shortcuts.js    # 快捷键
-    ├── notifications.js# 通知系统
-    ├── notepad.js      # 记事本
-    ├── calculator.js   # 计算器
-    ├── easterEggs.js   # 彩蛋系统
-    ├── horror.js       # 恐怖等级系统
-    ├── camera.js       # 监控摄像头
-    ├── systemLog.js    # 系统日志
-    ├── mirror.js       # 镜像
-    ├── hiddenFolder.js # 隐藏文件夹
-    ├── weather.js      # 天气
-    ├── drawpad.js      # 画板
-    └── recycleBin.js   # 回收站
+│   ├── boot.css            # 启动、登录
+│   ├── desktop.css         # 桌面、图标、右键菜单
+│   ├── window.css          # 窗口系统
+│   ├── taskbar.css         # 任务栏、开始菜单
+│   ├── terminal.css        # 终端、文件管理器、聊天
+│   └── effects.css         # 特效动画
+├── js/
+│   ├── main.js             # 主控制器
+│   ├── window.js           # 窗口管理器
+│   ├── taskbar.js          # 任务栏
+│   ├── desktop.js          # 桌面图标
+│   ├── terminal.js         # 终端
+│   ├── fileManager.js      # 文件管理器
+│   ├── chat.js             # 聊天
+│   ├── settings.js         # 设置
+│   ├── virus.js            # 病毒
+│   ├── shortcuts.js        # 快捷键
+│   ├── notifications.js    # 通知
+│   ├── notepad.js          # 记事本
+│   ├── calculator.js       # 计算器
+│   ├── easterEggs.js       # 彩蛋
+│   ├── horror.js           # 恐怖系统
+│   ├── camera.js           # 监控
+│   ├── systemLog.js        # 日志
+│   ├── mirror.js           # 镜像
+│   ├── hiddenFolder.js     # 隐藏文件
+│   ├── weather.js          # 天气
+│   ├── drawpad.js          # 画板
+│   ├── recycleBin.js       # 回收站
+│   ├── story/              # 叙事引擎
+│   │   ├── storyEngine.js  #   状态机
+│   │   ├── storyGraph.js   #   节点对话引擎
+│   │   ├── storyNodes.js   #   剧情节点
+│   │   ├── storyline.js    #   剧情流程
+│   │   ├── dialogue.js     #   对话系统
+│   │   ├── endings.js      #   结局判定
+│   │   ├── memory.js       #   多周目存档
+│   │   └── variables.js    #   变量
+│   └── narrative/          # 叙事数据
+│       ├── maintainer.js   #   维护者对话
+│       ├── logs.js         #   系统日志
+│       ├── cameraStory.js  #   监控时间线
+│       ├── mirrorStory.js  #   镜像文本
+│       ├── hiddenFiles.js  #   隐藏文件
+│       └── virusStory.js   #   病毒文本
+└── assets/                 # 资源
 `
-
 ## 🛠️ 技术栈
 
 - **纯前端**：HTML + CSS + Vanilla JS，零依赖
