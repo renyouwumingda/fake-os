@@ -212,6 +212,52 @@ var HORROR_EVENTS = [
       } catch(e) {}
     }
   },
+  { name: "glitch", minLevel: 2, cooldown: 200000, probability: 0.06,
+    action: function() {
+      document.body.style.filter = "hue-rotate(90deg) saturate(2)";
+      setTimeout(function() { document.body.style.filter = ""; }, 150);
+      setTimeout(function() { document.body.style.filter = "hue-rotate(180deg)"; }, 250);
+      setTimeout(function() { document.body.style.filter = ""; }, 350);
+    }
+  },
+  { name: "static", minLevel: 3, cooldown: 240000, probability: 0.04,
+    action: function() {
+      var ov = document.createElement("div");
+      ov.style.cssText = "position:fixed;inset:0;z-index:99997;pointer-events:none;background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(255,255,255,0.03) 2px,rgba(255,255,255,0.03) 4px);opacity:0;transition:opacity 0.3s;";
+      document.body.appendChild(ov);
+      setTimeout(function() { ov.style.opacity = "1"; }, 50);
+      setTimeout(function() { ov.style.opacity = "0"; }, 200);
+      setTimeout(function() { ov.remove(); }, 500);
+    }
+  },
+  { name: "invert", minLevel: 3, cooldown: 300000, probability: 0.03,
+    action: function() {
+      document.body.style.filter = "invert(1)";
+      setTimeout(function() { document.body.style.filter = ""; }, 200);
+    }
+  },
+  { name: "whisper", minLevel: 2, cooldown: 180000, probability: 0.05,
+    action: function() {
+      var ws = ["\u522b\u52a8","\u6211\u5728","\u770b\u5230\u4f60\u4e86","\u8fd9\u91cc"];
+      var el = document.createElement("div");
+      el.textContent = ws[Math.floor(Math.random() * ws.length)];
+      el.style.cssText = "position:fixed;bottom:80px;left:" + (20 + Math.random() * 60) + "%;color:rgba(255,50,50,0.6);font-size:14px;font-family:monospace;z-index:99996;pointer-events:none;opacity:0;transition:opacity 2s;";
+      document.body.appendChild(el);
+      setTimeout(function() { el.style.opacity = "1"; }, 100);
+      setTimeout(function() { el.style.opacity = "0"; }, 4000);
+      setTimeout(function() { el.remove(); }, 6000);
+    }
+  },
+  { name: "blood", minLevel: 4, cooldown: 360000, probability: 0.03,
+    action: function() {
+      var ov = document.createElement("div");
+      ov.style.cssText = "position:fixed;inset:0;z-index:99995;pointer-events:none;background:radial-gradient(ellipse at center,transparent 50%,rgba(139,0,0,0.15) 100%);opacity:0;transition:opacity 3s;";
+      document.body.appendChild(ov);
+      setTimeout(function() { ov.style.opacity = "1"; }, 100);
+      setTimeout(function() { ov.style.opacity = "0"; }, 5000);
+      setTimeout(function() { ov.remove(); }, 7000);
+    }
+  },
 ];
 
 // ===== 第四面墙打破 =====
